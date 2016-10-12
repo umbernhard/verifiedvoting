@@ -3,35 +3,21 @@ import locale
 
 year_list = ["2012", "2014","2016"]
 #swing_states = ["Iowa"] #"Pennsylvania",  "Ohio", "Florida", "Arizona", "Iowa"]
-swing_states = ["North Carolina"]
-#"North Dakota",
-#"Ohio",
-#"Oklahoma",
-#"Oregon",
-#"Pennsylvania",
-#"Rhode Island",
-#"South Carolina",
-#"South Dakota",
-#"Tennessee",
-#"Texas",
-#"Utah",
-#"Vermont",
-#"Virginia",
-#"Washington",
-#"West" "Virginia",
+swing_states = ["District Of Columbia"]
 #"Wisconsin",
 #"Wyoming"]
 
 mail = ["Colorado", "Washington", "Oregon"] 
 
 #NOTE Mississippi just has missing voters, am unsure why. 
+#NOTE Rhode Island seems a little too high
 
 absentees = ["Alabama", "Alaska", "Iowa", "Arizona", "Mississippi"]
 
 # TODO Figure out why there is so much duplication
-doubles = ["Colorado", "Washington", "Oregon", "Alabama", "Arizona", "California", "Florida", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Mexico"]
+doubles = ["Colorado", "Washington", "Oregon", "Alabama", "Arizona", "California", "Florida", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Mexico", "North Carolina", "North Dakota", "Ohio", "South Dakota", "Tennessee", "Texas", "Virginia", "West Virginia", "Wyoming"]
 
-special = ["Arkansas", "California", "Colorado", "Washington", "Oregon", "Connecticut", "Florida","Hawaii", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Maine", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Hampshire", "New Mexico", "New York"]
+special = ["Arkansas", "California", "Colorado", "Washington", "Oregon", "Connecticut", "Florida","Hawaii", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Maine", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Hampshire", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Rhode Island", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "West Virginia", "Wisconsin", "Wyoming", "District Of Columbia"]
 
 code_list = []
 
