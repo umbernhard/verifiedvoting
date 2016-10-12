@@ -2,19 +2,93 @@ import json
 import locale
 
 year_list = ["2012", "2014","2016"]
-swing_states = ["Pennsylvania",  "Ohio", "Florida", "Arizona", "Iowa"]
+#swing_states = ["Pennsylvania",  "Ohio", "Florida", "Arizona", "Iowa"]
+
+swing_states = [
+#"Alabama"
+#"Alaska"
+#"Arizona"
+"Arkansas"
+#"California"
+#"Colorado"
+#"Connecticut"
+#"Delaware"
+#"Florida"
+#"Georgia"
+#"Hawaii"
+#"Idaho"
+#"Illinois"
+#"Indiana"
+#"Iowa"
+#"Kansas"
+#"Kentucky"
+#"Louisiana"
+#"Maine"
+#"Maryland"
+#"Massachusetts"
+#"Michigan"
+#"Minnesota"
+#"Mississippi"
+#"Missouri"
+#"Montana"
+#"Nebraska"
+#"Nevada"
+#"New Hampshire"
+#"New Jersey"
+#"New Mexico"
+#"New York"
+#"North Carolina"
+#"North Dakota"
+#"Ohio"
+#"Oklahoma"
+#"Oregon"
+#"Pennsylvania"
+#"Rhode Island"
+#"South Carolina"
+#"South Dakota"
+#"Tennessee"
+#"Texas"
+#"Utah"
+#"Vermont"
+#"Virginia"
+#"Washington"
+#"West Virginia"
+#"Wisconsin"
+#"Wyoming"
+#"District Of Columbia"
+]
 
 mail = ["Colorado", "Washington", "Oregon"] 
 
 #NOTE Mississippi just has missing voters, am unsure why. 
 #NOTE Rhode Island seems a little too high
 
-absentees = ["Alabama", "Alaska", "Iowa", "Arizona", "Mississippi"]
+absentees = {
+        "2012":[],
+        "2014":["Colorado", "Oklahoma"],
+        "2016":["Alabama", "Alaska", "Iowa", "Arizona", "Mississippi"]}
 
 # TODO Figure out why there is so much duplication
-doubles = ["Colorado", "Washington", "Oregon", "Alabama", "Arizona", "California", "Florida", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Mexico", "North Carolina", "North Dakota", "Ohio", "South Dakota", "Tennessee", "Texas", "Virginia", "West Virginia", "Wyoming"]
+doubles = {
+        "2012":[], 
+        
+        "2014":["Colorado", "Washington", "Oregon", "Alabama", "Arizona", "Arkansas", "California", "Florida", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Mexico", "North Carolina", "North Dakota", "Ohio", "South Dakota", "Tennessee", "Texas", "Virginia", "West Virginia", "Wyoming"],
+        
+        "2016":["Colorado", "Washington", "Oregon", "Alabama", "Arizona", "California", "Florida", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Mexico", "North Carolina", "North Dakota", "Ohio", "South Dakota", "Tennessee", "Texas", "Virginia", "West Virginia", "Wyoming"]}
 
-special = ["Arkansas", "California", "Colorado", "Washington", "Oregon", "Connecticut", "Florida","Hawaii", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Maine", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Hampshire", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Rhode Island", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "West Virginia", "Wisconsin", "Wyoming", "District Of Columbia"]
+special = {
+        "2012":[], 
+        
+        "2014":["Oklahoma"],
+        "2016":["Alaska", "Alabama", "Arizona", "Delaware", "Georgia", "Iowa", "Louisiana", "Maryland", "Montana", "Nevada", "New Jersey", "Pennsylvania", "South Carolina"]
+            
+}
+
+# States that coordinate at a state-level, not counties
+state_level = ["Alaska"]
+
+# States which only use DREs for accessibility
+accessible = ["Arizona", "Arkansas"]
 
 
 code_list = []
@@ -37,17 +111,26 @@ def process(year):
 
         for code in data["codes"]:
 
+            if code["state_name"] in swing_states:
+                print code
+
+            # only look at the county level to avoid duplicates
+            # unless the state does statewide voting coordiation
+            if code["state_name"] not in state_level and code["type"] != "County":
+                continue
+
 
             code_count = int(code["registration"])
 
-            if code["state_name"] not in special:
-                if ((code["polling_place"] == "No" and code["state_name"] not in absentees) or code["abs_ballots"] == "Yes"):
+            if code["state_name"] in special[year]:
+                if ((code["polling_place"] == "No" and code["state_name"] not in absentees[year]) or code["abs_ballots"] == "Yes"):
                     continue
 
-            if code["state_name"] in doubles:
-                code_count = code_count/2
 
-            if "DRE" in code["equipment_type"]:
+#            if code["state_name"] in doubles[year]:
+#                code_count = code_count/2
+
+            if "DRE" in code["equipment_type"] and code["state_name"] not in mail and (code["state_name"] not in accessible or code["accessible_use"] == "No"):
                 results["nation"]["dre"] += code_count 
                 if code["state_name"] in swing_states:
                     results[code["state_name"]]["dre"] += code_count
@@ -123,3 +206,4 @@ def print_results(year, results):
 
 for year in year_list:
     print_results(year, process(year))
+    print "====================================================\n"
