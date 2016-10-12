@@ -1,0 +1,330 @@
+<map name="map_all" id="map_all"> <area shape="poly"
+coords="3,4,9,4,15,4,21,4,26,4,31,4,36,4,41,3,46,3,51,3,56,4,57,9,56,14,55,19,53,24,49,27,45,28,40,28,36,28,32,28,28,28,24,28,23,33,19,36,16,41,12,41,8,41,5,37,3,4"
+href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+target="_top" alt="Benton - Bentonville -  Model 650 Central Optical Scan
+Tabulator"> <area
+href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+target="_top" alt="Chicot - Lake Village - 650 Central Optical Scan Tabulator"
+shape="poly"
+coords="254,272,259,272,262,277,267,277,272,277,277,277,282,280,284,285,283,290,282,295,283,300,284,305,284,310,282,315,279,320,275,323,271,323,267,323,263,323,259,323,255,323,254,272">
+<area
+href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+target="_top" alt="Ashley - Hamburg - Model 650 Central Optical Scan Tabulator"
+shape="poly"
+coords="206,321,205,317,204,313,204,309,206,305,210,301,212,297,214,293,219,290,226,290,231,290,236,290,241,290,246,290,251,290,252,295,252,300,252,305,252,310,252,315,252,320,206,321">
+<area shape="poly"
+coords="136,291,141,291,146,290,151,289,156,289,161,289,167,290,171,295,175,300,180,300,185,300,190,302,195,304,200,308,203,313,205,318,201,323,196,323,191,322,186,322,181,321,176,321,171,321,167,321,163,321,159,321,155,321,151,321,146,321,142,321,138,320,134,320,136,291"
+href="voting_machines_ar_electronic.html" target="_top" alt="Union - El Dorado
+- ELECTronic DRE"> <area shape="poly"
+  coords="109,279,114,280,119,280,124,279,128,284,133,286,137,291,137,296,137,301,137,306,137,311,137,316,132,317,128,317,123,317,119,316,114,316,110,316,106,316,102,315,98,314,98,310,99,306,99,302,99,298,109,279"
+  href="voting_machines_ar_electronic.html" target="_top" alt="Columbia -
+  Magnolia - ELECTronic DRE"> <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Lafayette - Lewisville - iVotronic Touch-Screen"
+  shape="poly"
+  coords="70,281,75,281,80,281,86,281,91,282,96,284,101,287,106,287,104,292,100,295,97,300,97,305,97,310,97,315,97,320,93,322,89,322,84,323,80,323,76,323,72,323,68,323,64,323,62,319,62,315,60,311,65,309,70,306,70,281">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Miller - Texarkana - iVotronic Touch-Screen" shape="poly"
+  coords="44,273,49,271,54,269,59,268,64,268,65,273,65,278,70,283,71,289,71,294,69,299,66,304,62,308,61,313,62,318,58,322,54,322,50,322,46,322,44,273">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Little River - Ashdown - iVotronic Touch-Screen"
+  shape="poly"
+  coords="11,235,17,236,20,241,23,246,28,250,33,251,38,252,43,252,48,253,51,258,56,263,56,268,52,270,48,272,44,272,40,270,35,269,30,268,25,268,21,268,17,268,13,268,9,267,11,235">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Hempstead - Hope -  iVotronic Touch-Screen" shape="poly"
+  coords="61,232,67,232,73,232,79,234,85,237,90,239,95,240,97,245,97,250,97,255,97,260,97,265,96,270,94,275,92,280,88,281,83,281,79,281,75,281,71,281,67,278,67,274,65,270,62,266,57,264,53,262,53,258,53,254,58,254,61,232">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Nevada - Prescott - iVotronic Touch-Screen" shape="poly"
+  coords="99,238,104,238,108,243,111,248,116,250,121,252,126,256,127,261,127,266,126,271,125,276,123,281,119,284,115,286,111,286,107,286,103,285,99,284,95,283,99,238">
+  <area href="voting_machines_ar_electronic.html" alt="Ouachita - Camden -
+  ELECTronic DRE" shape="poly"
+  coords="128,255,133,254,138,253,143,251,149,251,156,251,161,252,162,257,158,261,155,266,154,271,152,276,154,281,159,285,164,288,160,291,156,291,152,291,148,291,144,291,140,291,135,291,131,291,127,290,128,255">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Calhoun - Hampton - iVotronic Touch-Screen" shape="poly"
+  coords="164,253,170,253,175,253,180,253,185,254,185,259,185,264,185,270,185,275,185,280,184,285,182,290,181,295,177,298,173,296,171,292,168,288,164,286,160,283,156,280,154,276,153,272,154,268,154,264,164,253">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Bradley - Warren - iVotronic Touch-Screen" shape="poly"
+  coords="187,262,192,262,197,261,202,261,207,261,212,261,213,266,212,271,211,276,210,282,213,287,214,292,213,297,209,300,205,303,204,308,200,309,198,305,194,302,190,301,186,301,183,297,182,293,182,289,187,286,188,282,187,262">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Drew -  Monticello - iVotronic Touch-Screen" shape="poly"
+  coords="213,253,218,253,225,253,230,254,235,254,240,254,245,254,250,255,252,261,252,267,252,273,253,278,253,283,253,288,248,289,244,290,239,290,234,290,229,290,225,290,221,290,217,289,213,288,212,284,211,280,213,253">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Desha - Ark. City -  iVotronic Touch-Screen" shape="poly"
+  coords="247,234,252,234,257,232,262,233,267,236,272,237,277,238,277,234,277,230,275,226,276,222,281,221,287,220,292,220,295,225,291,228,287,232,287,237,287,242,286,247,283,252,280,257,277,262,275,268,273,273,269,277,265,277,263,273,259,270,255,270,254,266,254,262,254,258,254,254,250,251,246,251,247,234">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Lincoln -  Star City - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="216,226,221,226,226,226,231,227,233,223,233,219,238,219,242,224,247,226,252,226,256,231,252,235,248,236,244,240,245,245,245,250,241,252,236,252,232,251,228,251,224,251,220,251,216,251,216,226">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Cleveland - Rison - iVotronic Touch-Screen" shape="poly"
+  coords="174,229,179,229,185,229,191,229,196,228,201,228,206,228,211,228,214,233,215,238,215,243,215,248,215,253,215,258,210,260,205,261,201,261,197,261,193,263,189,264,186,260,185,256,185,252,184,248,180,244,174,229">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Dallas - Fordyce - iVotronic Touch-Screen" shape="poly"
+  coords="142,220,148,221,153,221,158,221,163,221,168,221,173,221,178,222,182,227,178,228,175,233,179,238,180,243,183,248,180,253,175,253,171,253,166,253,162,252,157,252,153,252,149,252,144,251,141,247,139,243,138,239,138,235,142,220">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Clark - Arkadelphia - iVotronic Touch-Screen" shape="poly"
+  coords="99,200,104,201,106,206,111,207,116,209,121,212,126,212,131,213,133,218,138,219,143,221,143,226,141,231,140,236,141,241,142,246,141,251,137,253,133,254,129,255,125,257,122,253,117,251,113,249,110,245,109,241,106,237,104,233,103,229,101,225,99,221,99,217,97,213,95,209,99,200">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="Pike - Murfreesboro - Model 100 Optical Scan Precinct"
+  shape="poly"
+  coords="53,200,59,200,66,200,72,200,78,200,83,200,88,202,93,203,95,208,92,213,96,218,96,223,99,228,100,233,96,237,92,238,88,238,84,238,79,237,75,235,71,233,67,232,63,231,61,227,61,223,61,219,61,215,53,200">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Howard -  Nashville - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="27,198,33,198,39,198,45,198,50,199,55,205,55,210,56,215,61,217,62,222,60,228,60,233,60,238,60,243,60,248,58,253,54,254,50,254,48,250,48,246,44,244,41,240,41,236,41,232,42,228,42,224,42,220,41,216,37,214,33,214,29,214,27,198">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Sevier - De Queen - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="12,213,17,213,24,213,30,213,35,213,40,217,41,222,40,227,38,233,38,238,42,243,47,246,49,251,44,253,40,251,36,249,32,248,28,247,24,246,20,242,17,238,13,236,12,213">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Hot Spring - Malvern - iVotronic Touch-Screen"
+  shape="poly"
+  coords="105,205,105,201,101,199,106,197,111,197,117,198,122,198,127,198,132,198,137,198,139,194,144,191,149,189,154,192,159,195,161,200,161,205,161,210,161,215,160,220,156,220,147,220,143,220,139,220,135,220,131,219,131,215,105,205">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Grant - Sheridan -   iVotronic Touch-Screen " shape="poly"
+  coords="159,197,164,196,168,192,173,192,178,193,180,189,186,189,191,191,193,196,192,201,192,207,192,212,192,217,192,222,192,227,188,228,184,228,180,226,179,222,175,220,171,220,167,221,163,221,159,221,159,197">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Jefferson - Pine Bluff - iVotronic Touch-Screen"
+  shape="poly"
+  coords="194,187,199,188,206,189,212,189,217,189,222,189,227,189,232,189,233,194,231,199,231,204,232,209,237,214,242,214,247,214,249,219,248,224,244,224,240,222,236,220,232,221,231,226,227,226,223,226,219,226,215,227,211,230,207,230,202,229,198,228,194,227,194,187">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Arkansas - De Witt - iVotronic Touch-Screen" shape="poly"
+  coords="243,179,249,178,254,178,259,178,264,178,265,183,267,188,272,193,277,196,281,201,284,206,284,211,283,216,281,221,277,223,276,228,277,233,276,238,272,239,268,239,264,237,263,233,259,231,257,227,254,223,252,219,250,215,247,211,243,210,239,211,235,211,235,207,235,203,235,199,235,195,235,191,240,188,243,179">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Phillips - Helena - iVotronic Touch-Screen" shape="poly"
+  coords="282,173,289,172,295,172,300,172,305,172,310,172,315,172,320,174,321,179,321,184,321,189,317,194,313,197,313,202,309,205,306,210,302,215,298,218,294,222,289,222,285,221,281,219,281,215,282,211,282,207,282,203,287,200,288,196,288,192,284,189,282,173">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Saline - Benton - Model 650 Central Optical Scan
+  Tabulator" shape="poly"
+  coords="126,161,127,157,131,153,137,153,142,152,146,157,150,162,155,162,159,158,160,163,165,164,170,164,171,169,175,174,180,177,185,179,190,181,189,186,184,188,180,188,176,191,172,192,168,192,164,193,160,195,156,197,154,193,152,189,151,185,150,181,146,178,142,177,138,175,135,171,135,167,135,163,126,161">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="Garland - Hot Springs -  Model 100 Optical Scan Precinct"
+  shape="poly"
+  coords="103,164,108,164,114,164,119,165,124,165,133,164,133,171,134,176,139,177,143,182,148,183,147,188,143,189,139,193,137,198,133,199,129,199,125,199,121,199,117,198,113,198,109,198,105,197,101,197,103,164">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Montgomery - Mount Ida - iVotronic Touch-Screen"
+  shape="poly"
+  coords="53,197,53,193,53,189,53,185,53,181,53,177,53,173,58,171,60,167,66,166,71,166,77,166,82,166,87,166,92,167,97,168,100,174,99,179,99,184,99,189,100,194,100,199,53,197">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Perry - Perryville - iVotronic Touch-Screen" shape="poly"
+  coords="111,161,111,156,111,152,114,148,118,144,123,142,128,140,131,135,139,136,145,137,150,136,156,137,161,135,166,134,169,139,166,144,161,149,157,149,153,149,149,149,151,154,147,158,143,155,139,155,133,154,129,155,126,154,124,157,124,162,111,161">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="Pulaski - Little Rock - Model 100 Optical Scan Precinct"
+  shape="poly"
+  coords="151,158,151,154,152,150,157,150,162,149,167,148,172,148,173,153,178,153,183,151,188,150,191,146,196,144,201,146,202,151,202,156,202,161,202,166,201,171,201,176,206,179,207,184,206,189,202,189,198,189,194,189,190,189,190,185,186,182,182,182,181,178,177,178,173,178,173,174,169,173,167,169,163,166,159,165,157,161,151,158">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Lonoke -  Lonoke - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="198,139,203,136,208,136,214,137,220,139,225,140,225,145,224,150,229,153,234,158,233,163,232,168,236,173,235,178,236,183,236,188,232,191,227,189,222,189,217,188,213,187,209,187,205,187,206,183,206,179,202,177,198,175,202,171,205,167,205,163,205,159,205,155,205,151,205,147,205,143,198,139">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Prairie - Des Arc and DeValls Bluff - iVotronic
+  Touch-Screen" shape="poly"
+  coords="224,147,224,143,224,139,227,135,232,135,237,138,242,138,242,134,247,132,252,136,257,137,257,142,257,147,257,152,257,157,256,162,254,167,253,172,254,177,250,179,246,180,243,185,239,189,235,189,237,185,238,181,238,177,238,173,237,169,233,169,224,147">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Monroe - Clarendon - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="257,166,257,162,257,158,259,154,260,150,263,146,266,142,271,141,274,146,276,151,278,156,280,161,280,166,282,171,282,176,282,181,282,186,286,191,286,196,286,201,282,204,278,203,276,199,274,195,270,190,267,186,264,182,257,166">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Lee - Marianna -  650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="279,164,279,160,279,156,279,152,280,148,285,148,290,148,296,148,301,147,306,147,311,147,316,147,321,147,326,147,330,152,330,157,328,162,324,164,323,169,319,173,315,173,310,174,306,174,301,174,297,173,293,173,289,173,285,172,279,164">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="St. Francis - Forrest City - Model 100 Optical Scan
+  Precinct" shape="poly"
+  coords="283,127,290,126,297,126,303,126,308,126,313,125,318,125,324,126,329,127,331,132,331,137,331,142,329,147,325,148,320,149,315,149,311,149,307,148,302,147,296,147,292,146,288,146,284,146,280,146,278,151,274,149,272,145,275,141,280,140,283,127">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Crittenden - Marion -  iVotronic Touch-Screen"
+  shape="poly"
+  coords="323,100,329,100,334,100,339,100,344,100,349,101,349,106,351,111,349,116,350,121,349,126,346,131,345,136,345,141,341,145,337,149,333,152,332,147,332,143,332,139,332,135,331,131,327,129,323,128,323,100">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Cross - Wynne - iVotronic Touch-Screen" shape="rect"
+  coords="281,98,323,126"> <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Woodruff - Augusta - iVotronic Touch-Screen" shape="poly"
+  coords="257,100,262,100,265,105,270,109,275,110,280,110,281,115,281,121,281,126,282,131,283,136,279,140,275,141,271,141,267,142,263,145,261,150,257,146,256,142,254,138,251,134,251,130,251,126,252,122,255,118,252,114,257,100">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="White - Searcy - iVotronic Touch-Screen" shape="poly"
+  coords="201,108,208,108,214,108,219,108,221,104,222,100,223,96,225,92,231,91,233,96,238,100,243,100,248,100,253,100,255,105,252,110,252,115,254,120,255,125,252,130,248,134,244,134,240,138,236,140,232,137,228,135,223,135,219,136,215,136,211,136,207,136,203,135,201,108">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Faulkner - Conway - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="172,108,178,108,183,109,188,109,193,109,198,110,199,115,199,120,198,125,198,130,198,135,198,140,194,142,190,146,186,147,182,147,178,148,174,152,171,148,167,145,165,141,165,137,167,133,169,129,172,108">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="Poinsett - Harrisburg - Model 100 Optical Scan Precinct"
+  shape="rect" coords="281,76,337,98"> <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Mississippi - Osceola and Blytheville - iVotronic
+  Touch-Screen" shape="poly"
+  coords="336,48,342,48,348,48,354,46,360,46,365,46,370,46,375,47,380,49,383,54,379,58,379,63,375,65,371,67,367,68,365,73,365,78,366,83,366,88,363,93,359,95,355,97,351,98,347,99,343,99,339,99,336,48">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="Craighead - Jonesboro and Lake City - Model 100 Optical
+  Scan Precinct" shape="poly"
+  coords="281,60,286,60,291,60,294,56,296,52,302,51,307,51,312,50,317,49,322,49,327,48,333,48,338,51,338,57,338,62,338,67,338,72,334,75,330,75,321,75,314,75,307,76,302,76,297,76,293,76,288,76,284,76,281,60">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Jackson - Newport - iVotronic Touch-Screen" shape="poly"
+  coords="268,58,273,58,278,58,284,59,282,64,281,70,281,75,282,80,282,85,282,90,282,95,282,100,282,105,278,108,273,109,269,108,266,104,265,100,261,99,257,99,253,99,249,99,245,99,241,99,240,95,245,93,250,92,255,90,256,86,256,82,260,78,260,74,268,58">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Independence - Batesville -  iVotronic Touch-Screen"
+  shape="poly"
+  coords="226,55,231,55,236,55,242,55,247,59,252,60,258,59,263,59,268,59,267,64,263,69,260,74,260,79,257,84,257,89,253,93,248,93,244,93,239,93,235,92,231,92,227,92,224,88,224,84,224,80,221,76,217,74,217,70,217,66,226,55">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Cleburne - Heber Springs - iVotronic touch-screen"
+  shape="poly"
+  coords="187,76,193,76,198,75,204,75,210,75,215,75,220,75,224,80,224,85,224,90,224,95,222,100,220,105,216,108,212,108,207,108,203,108,199,108,194,108,190,108,187,76">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Van Buren - Clinton - iVotronic touch-screen" shape="poly"
+  coords="148,76,153,76,158,76,162,72,167,70,172,70,177,70,177,75,182,77,187,77,189,82,188,87,188,92,188,97,187,102,186,107,182,107,178,108,174,109,172,105,172,101,168,100,164,100,160,100,156,100,152,99,148,99,144,96,144,92,148,76">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Conway -Morrilton - iVotronic Touch-Screen" shape="poly"
+  coords="145,99,150,99,155,99,160,99,165,99,170,100,171,105,172,110,173,115,170,120,168,125,168,130,164,133,160,133,156,135,152,136,148,136,144,136,140,136,136,136,132,136,132,132,137,129,142,127,145,99">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Yell -Dardanelle and Danville - iVotronic Touch-Screen"
+  shape="poly"
+  coords="71,125,76,126,82,126,87,126,92,126,96,122,101,120,106,120,111,120,113,116,113,112,116,117,119,122,124,127,129,130,130,135,126,140,122,142,118,145,114,149,110,152,107,157,109,162,105,163,101,163,97,164,92,163,87,163,83,163,79,163,75,162,71,162,71,125">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Searcy - Marshall - iVotronic Touch-Screen" shape="poly"
+  coords="136,39,141,39,143,44,148,45,153,45,158,45,163,45,168,45,173,45,176,50,176,55,176,60,176,65,176,70,172,71,168,71,164,70,160,72,156,76,152,76,148,75,144,75,139,74,135,74,136,39">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Stone - Mountain View - Model 650 Central Optical Scan
+  Tabulator" shape="poly"
+  coords="177,52,182,51,184,47,189,44,194,41,199,40,201,45,201,50,199,55,205,56,210,58,215,61,220,63,221,68,220,73,216,77,211,78,207,78,203,78,198,78,194,78,190,78,186,77,182,76,178,75,177,52">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Izard - Melbourne - iVotronic Touch-Screen" shape="poly"
+  coords="195,27,201,26,206,26,211,26,216,26,221,26,226,26,231,28,231,33,231,38,230,43,230,48,226,53,222,56,218,60,214,61,210,59,206,56,202,56,201,52,202,48,201,44,197,44,193,43,192,39,195,27">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Sharp - Ash Flat - iVotronic Touch-Screen" shape="poly"
+  coords="249,4,251,9,256,12,259,17,260,22,259,27,256,32,254,37,254,42,253,47,253,52,254,57,250,60,246,58,242,54,238,54,234,54,230,54,229,50,229,46,231,42,231,38,232,34,232,30,237,27,239,23,239,19,244,19,249,4">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Lawrence - Walnut Ridge - Model 650 Central Optical Scan
+  Tabulator" shape="poly"
+  coords="256,30,257,26,262,26,267,30,272,33,277,35,282,35,287,35,292,34,297,34,302,35,301,40,299,45,298,50,297,55,293,59,289,59,285,59,280,58,276,58,272,58,268,57,264,57,260,57,256,56,256,30">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Greene - Paragould -  Model 100 Optical Scan Precinct "
+  shape="poly"
+  coords="296,23,301,23,308,23,314,23,319,23,325,23,330,26,335,28,340,29,339,34,335,36,331,39,329,44,328,49,324,51,320,51,316,51,312,51,308,51,304,51,300,50,297,46,298,42,301,38,296,23">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Clay - Corning and Piggott -  iVotronic touch-screen"
+  shape="poly"
+  coords="296,4,301,3,312,3,320,3,327,3,333,3,338,3,343,3,345,8,348,13,350,18,349,23,345,25,341,27,336,27,332,24,327,24,323,24,319,24,315,24,310,24,306,24,302,24,298,23,300,19,300,15,296,4">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Randolph - Pocahontas - iVotronic Touch-Screen"
+  shape="poly"
+  coords="251,6,256,6,261,5,266,5,271,5,276,5,281,5,287,5,292,5,296,10,300,15,299,20,295,22,295,27,295,32,291,34,287,35,283,35,279,37,275,36,271,33,267,31,263,29,260,25,260,21,260,17,251,6">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Fulton - Salem - iVotronic Touch-Screen" shape="poly"
+  coords="196,6,201,6,207,6,213,6,218,6,223,6,229,6,235,4,241,5,246,7,248,12,247,17,243,19,239,21,235,26,231,27,225,26,220,26,216,26,212,26,207,26,203,26,199,26,195,27,196,6">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Madison - Huntsville - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="59,19,65,19,70,19,75,19,78,24,83,29,85,34,90,39,95,42,96,47,96,52,94,57,92,62,91,67,87,71,82,71,78,71,74,71,70,71,66,70,62,70,58,69,56,65,54,61,53,57,53,53,59,19">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Washington - Fayetteville - 650 Central Optical Scan
+  Tabulator" shape="poly"
+  coords="7,37,12,37,17,36,22,35,23,31,24,27,29,28,34,28,39,28,44,27,49,26,54,26,56,31,53,36,50,41,50,46,51,51,52,56,52,61,52,66,48,70,44,69,40,69,36,70,32,70,28,70,24,69,20,69,16,69,12,68,7,37">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Crawford - Van Buren - iVotronic Touch-Screen"
+  shape="poly"
+  coords="11,67,17,68,24,69,30,69,35,69,40,70,45,71,50,71,55,71,51,76,47,77,46,82,46,87,43,92,42,97,38,101,34,102,32,107,28,111,24,112,21,108,17,106,11,67">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="Sebastian - Fort Smith and Greenwood - Model 100 Optical
+  Scan Precinct" shape="poly"
+  coords="17,103,22,104,24,109,29,113,34,110,36,106,38,102,41,98,43,103,42,108,41,113,42,118,47,119,49,124,46,129,42,129,38,129,34,130,30,133,29,138,28,143,24,144,20,145,16,143,17,103">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Polk - Mena - iVotronic Touch-Screen" shape="poly"
+  coords="13,162,18,162,23,164,29,168,34,167,39,167,45,167,50,168,51,173,51,178,51,183,51,188,51,193,47,196,43,196,39,196,35,196,31,195,27,196,27,201,27,206,26,211,22,211,17,211,13,211,13,162">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Scott -  Waldron - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="16,146,18,142,24,143,29,143,31,139,31,135,36,132,41,133,46,134,51,135,56,135,61,136,66,136,71,140,71,146,70,151,69,156,69,161,65,164,61,164,60,169,56,170,54,166,50,166,46,167,42,167,36,167,32,168,28,167,24,165,20,163,16,164,16,146">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Franklin - Ozark and Charleston - iVotronic Touch-Screen"
+  shape="poly"
+  coords="57,70,62,70,67,70,71,75,71,80,71,85,71,90,71,95,72,100,72,105,68,105,64,106,63,111,59,111,55,112,54,117,50,119,46,120,42,119,42,115,43,111,44,107,44,103,44,99,44,95,44,91,46,87,47,83,48,79,49,75,57,70">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Logan -  Booneville and Paris - 650 Central Optical Scan
+  Tabulator" shape="poly"
+  coords="38,129,39,125,43,121,48,120,53,119,55,115,55,111,60,109,65,109,66,105,71,103,76,104,81,106,86,108,91,108,96,105,101,108,106,111,111,112,111,117,107,120,103,120,99,120,95,124,91,127,87,127,83,127,79,125,75,125,71,126,71,131,70,136,66,137,62,137,58,137,54,137,49,137,45,135,38,129">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Johnson - Clarksville - iVotronic Touch-Screen"
+  shape="poly"
+  coords="73,70,78,69,84,69,89,69,93,74,99,75,105,76,110,76,115,76,119,81,119,86,116,91,116,96,114,101,111,106,111,111,107,114,102,113,100,109,100,105,96,104,92,104,88,105,84,108,80,105,76,103,72,103,73,70">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="Pope - Russellville - Model 100 Optical Scan Precinct"
+  shape="poly"
+  coords="121,76,126,76,131,76,136,76,141,77,146,78,147,83,146,88,144,93,144,98,144,103,144,108,144,113,144,118,144,123,140,126,136,126,132,127,128,127,126,123,122,120,118,116,114,113,110,111,110,107,110,103,115,100,117,96,117,92,117,88,121,76">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Newton - Jasper - 650 Central Optical Scan Tabulator"
+  shape="poly"
+  coords="97,37,103,39,110,39,115,39,120,39,125,39,130,39,135,40,137,45,137,50,136,55,136,60,136,65,136,70,134,75,130,75,126,75,122,75,116,75,111,75,107,75,103,75,98,75,94,75,92,71,92,67,93,63,94,59,96,55,97,51,97,37">
+  <area href="http://www.sos.arkansas.gov/elections/Pages/opticalScanner.aspx"
+  target="_top" alt="Baxter - Mountain Home - Model 100 Optical Scan Precinct"
+  shape="poly"
+  coords="169,6,174,6,179,6,184,7,189,6,194,8,195,13,195,18,195,23,195,28,194,33,190,35,193,40,189,44,185,44,184,49,180,52,179,48,178,44,178,40,177,36,173,35,171,31,171,27,169,23,165,22,162,18,163,14,167,10,169,6">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Marion - Yellville - iVotronic Touch-Screen" shape="poly"
+  coords="141,5,146,6,151,6,156,5,161,5,166,5,166,10,165,15,163,20,168,25,171,30,174,35,176,40,172,43,168,44,167,44,161,44,156,43,153,44,148,44,145,40,141,39,141,5">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/iVotronicTouchScreen.aspx"
+  target="_top" alt="Boone - Harrison -  iVotronic Touch-Screen" shape="poly"
+  coords="111,6,116,6,122,6,127,6,132,6,137,6,142,9,142,14,142,19,142,24,142,29,141,34,141,39,137,40,133,40,129,40,125,40,121,40,117,40,113,40,109,40,111,6">
+  <area
+  href="http://www.sos.arkansas.gov/elections/Pages/CentralBallotCounter.aspx"
+  target="_top" alt="Carroll -  Eureka Springs and Berryville - Model 650
+  Central Optical Scan Tabulator" shape="poly"
+  coords="60,5,67,5,72,5,78,5,83,5,88,5,93,5,98,5,103,5,108,7,108,12,108,17,108,22,108,27,108,32,108,37,104,38,99,38,95,38,91,38,89,34,85,32,82,28,82,24,80,20,76,20,72,20,68,20,64,20,60,19,60,5">
+  </map>
