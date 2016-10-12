@@ -1,7 +1,7 @@
 import json
 import locale
 
-year_list = ["2016"]#"2012", "2014","2016"]
+year_list = ["2012", "2014","2016"]
 swing_states = ["Pennsylvania",  "Ohio", "Florida", "Arizona", "Iowa"]
 
 mail = ["Colorado", "Washington", "Oregon"] 
@@ -47,46 +47,46 @@ def process(year):
             if code["state_name"] in doubles:
                 code_count = code_count/2
 
-#            if "DRE" in code["equipment_type"]:
-#                results["nation"]["dre"] += code_count 
-#                if code["state_name"] in swing_states:
-#                    results[code["state_name"]]["dre"] += code_count
-#                
-#
-#                if code["vvpat"] == "0":
-#                    results["nation"]["vvpat"] += code_count 
-#                    if code["state_name"] in swing_states:
-#                        results[code["state_name"]]["vvpat"] += code_count
-#
-#                if "TSX" in code["model"] or "TSx" in code["model"]:
-#                    results["nation"]["tsx"] += code_count 
-#                    if code["state_name"] in swing_states:
-#                        results[code["state_name"]]["tsx"] += code_count
-#                elif "TS" in code["model"]:
-#                    results["nation"]["ts"] += code_count 
-#                    if code["state_name"] in swing_states:
-#                        results[code["state_name"]]["ts"] += code_count
-#                elif "WinVote" in code["model"]:
-#                    results["nation"]["winvote"] += code_count 
-#                    if code["state_name"] in swing_states:
-#                        results[code["state_name"]]["winvote"] += code_count
-#                elif "iVotronic" in code["model"]:
-#                    results["nation"]["ivotronic"] += code_count 
-#                    if code["state_name"] in swing_states:
-#                        results[code["state_name"]]["ivotronic"] += code_count
-#                else:
-#                    results["nation"]["other"] += code_count 
-#                    if code["state_name"] in swing_states:
-#                        results[code["state_name"]]["other"] += code_count
-#
+            if "DRE" in code["equipment_type"]:
+                results["nation"]["dre"] += code_count 
+                if code["state_name"] in swing_states:
+                    results[code["state_name"]]["dre"] += code_count
+                
+
+                if code["vvpat"] == "0":
+                    results["nation"]["vvpat"] += code_count 
+                    if code["state_name"] in swing_states:
+                        results[code["state_name"]]["vvpat"] += code_count
+
+                if "TSX" in code["model"] or "TSx" in code["model"]:
+                    results["nation"]["tsx"] += code_count 
+                    if code["state_name"] in swing_states:
+                        results[code["state_name"]]["tsx"] += code_count
+                elif "TS" in code["model"]:
+                    results["nation"]["ts"] += code_count 
+                    if code["state_name"] in swing_states:
+                        results[code["state_name"]]["ts"] += code_count
+                elif "WinVote" in code["model"]:
+                    results["nation"]["winvote"] += code_count 
+                    if code["state_name"] in swing_states:
+                        results[code["state_name"]]["winvote"] += code_count
+                elif "iVotronic" in code["model"]:
+                    results["nation"]["ivotronic"] += code_count 
+                    if code["state_name"] in swing_states:
+                        results[code["state_name"]]["ivotronic"] += code_count
+                else:
+                    results["nation"]["other"] += code_count 
+                    if code["state_name"] in swing_states:
+                        results[code["state_name"]]["other"] += code_count
+
 
             # no double counting
-            if code["name"] not in seen_precincts:
+            if code["state_name"] + code["name"] not in seen_precincts:
                 results["nation"]["count"] += code_count 
                 if code["state_name"] in swing_states:
                     results[code["state_name"]]["count"] += code_count
 
-                seen_precincts.append(code["name"])
+                seen_precincts.append(code["state_name"] + code["name"])
 
         return results
 
@@ -101,17 +101,24 @@ def print_results(year, results):
         if count == 0:
             count = .00000000000001
         print year, key, locale.format("%d", count, grouping=True)
-#        print("\t{:24s} {:2.2f}%".format("Percent voting on DREs: ", 100*(1.0*value["dre"])/count))
-#        print("\t{:24s} {:2.2f}%".format("Percent with no VVPAT: ", 100*(1.0*value["vvpat"]/count)/count))
-#        print("\t{:24s} {:2.2f}%".format("Percent TSX:", 100*(1.0*value["tsx"])/count))
-#        print("\t{:24s} {:2.2f}%".format("Percent TS:", 100*(1.0*value["ts"])/count))
-#        print("\t{:24s} {:2.2f}%".format("Percent iVotronic:", 100*(1.0*value["ivotronic"])/count))
-#        print("\t{:24s} {:2.2f}%".format("Percent WinVote:", 100*(1.0*value["winvote"])/count))
-#        print("\t{:24s} {:2.2f}%".format("Percent Other:", 100*(1.0*value["other"])/count))
+        print("\t{:24s} {:2.2f}%".format("Percent voting on DREs: ", 100*(1.0*value["dre"])/count))
+        print("\t{:24s} {:2.2f}%".format("Percent with no VVPAT: ", 100*(1.0*value["vvpat"])/count))
+        print("\t{:24s} {:2.2f}%".format("Percent TSX:", 100*(1.0*value["tsx"])/count))
+        print("\t{:24s} {:2.2f}%".format("Percent TS:", 100*(1.0*value["ts"])/count))
+        print("\t{:24s} {:2.2f}%".format("Percent iVotronic:", 100*(1.0*value["ivotronic"])/count))
+        print("\t{:24s} {:2.2f}%".format("Percent WinVote:", 100*(1.0*value["winvote"])/count))
+        print("\t{:24s} {:2.2f}%".format("Percent Other:", 100*(1.0*value["other"])/count))
         print "\n"
 
+    count = results["nation"]["count"]
     print year, locale.format("%d", results["nation"]["count"], grouping=True)
-
+    print("\t{:24s} {:2.2f}%".format("Percent voting on DREs: ", 100*(1.0*results["nation"]["dre"])/count))
+    print("\t{:24s} {:2.2f}%".format("Percent with no VVPAT: ", 100*(1.0*results["nation"]["vvpat"])/count))
+    print("\t{:24s} {:2.2f}%".format("Percent TSX:", 100*(1.0*results["nation"]["tsx"])/count))
+    print("\t{:24s} {:2.2f}%".format("Percent TS:", 100*(1.0*results["nation"]["ts"])/count))
+    print("\t{:24s} {:2.2f}%".format("Percent iVotronic:", 100*(1.0*results["nation"]["ivotronic"])/count))
+    print("\t{:24s} {:2.2f}%".format("Percent WinVote:", 100*(1.0*results["nation"]["winvote"])/count))
+    print("\t{:24s} {:2.2f}%".format("Percent Other:", 100*(1.0*results["nation"]["other"])/count))
     print "\n"
 
 for year in year_list:
