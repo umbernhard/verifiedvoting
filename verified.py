@@ -3,39 +3,7 @@ import locale
 
 year_list = ["2012", "2014","2016"]
 #swing_states = ["Iowa"] #"Pennsylvania",  "Ohio", "Florida", "Arizona", "Iowa"]
-swing_states = ["Arkansas"]
-#"Alaska",
-#"Arizona",
-#"Arkansas",
-#"California",
-#"Colorado",
-#"Connecticut",
-#"Delaware",
-#"Florida",
-#"Georgia",
-#"Hawaii",
-#"Idaho",
-#"Illinois",
-#"Indiana",
-#"Iowa",
-#"Kansas",
-#"Kentucky",
-#"Louisiana",
-#"Maine",
-#"Maryland",
-#"Massachusetts",
-#"Michigan",
-#"Minnesota",
-#"Mississippi",
-#"Missouri",
-#"Montana",
-#"Nebraska",
-#"Nevada",
-#"New Hampshire",
-#"New Jersey",
-#"New Mexico",
-#"New York",
-#"North Carolina",
+swing_states = ["North Carolina"]
 #"North Dakota",
 #"Ohio",
 #"Oklahoma",
@@ -54,53 +22,16 @@ swing_states = ["Arkansas"]
 #"Wisconsin",
 #"Wyoming"]
 
-arcounties = ["Lafayette",
-        "Miller",
-        "Little",
-        "Hempstead",
-        "Nevada",
-        "Calhoun",
-        "Bradley",
-        "Drew",
-        "Desha",
-        "Cleveland",
-        "Dallas",
-        "Clark",
-        "Hot",
-        "Grant",
-        "Jefferson",
-        "Arkansas",
-        "Phillips",
-        "Montgomery",
-        "Perry",
-        "Crittenden",
-        "Cross",
-        "Woodruff",
-        "White",
-        "Jackson",
-        "Independence",
-        "Conway",
-        "Yell",
-        "Searcy",
-        "Izard",
-        "Sharp",
-        "Randolph",
-        "Fulton",
-        "Crawford",
-        "Polk",
-        "Franklin",
-        "Johnson",
-        "Marion",
-        "Boone",
-        "Ouachita",
-        "Union",
-        "Columbia"]
-
 mail = ["Colorado", "Washington", "Oregon"] 
 
-absentees = ["Alabama", "Alaska", "Iowa"]
+#NOTE Mississippi just has missing voters, am unsure why. 
 
-doubles = ["Colorado", "Washington", "Oregon", "Alabama"]
+absentees = ["Alabama", "Alaska", "Iowa", "Arizona", "Mississippi"]
+
+# TODO Figure out why there is so much duplication
+doubles = ["Colorado", "Washington", "Oregon", "Alabama", "Arizona", "California", "Florida", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Mexico"]
+
+special = ["Arkansas", "California", "Colorado", "Washington", "Oregon", "Connecticut", "Florida","Hawaii", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Maine", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Nebraska", "New Hampshire", "New Mexico", "New York"]
 
 code_list = []
 
@@ -129,14 +60,9 @@ def process(place, year, prepend):
 
 
             code_count = int(code["registration"])
-            if code["state_name"] == "Arkansas" and code["name"] not in arcounties:
-                # we know this county doesn't use DREs as its primary system
-                if code["name"] not in seen_precincts:
-                    seen_precincts.append(code["name"])
-                    count += code_count 
+            if code["state_name"] not in special:
+                if ((code["polling_place"] == "No" and code["state_name"] not in absentees) or code["abs_ballots"] == "Yes"):
                     continue
-            elif (code["state_name"] == "Arkansas" and code["name"] in arcounties) or                 ((code["polling_place"] == "No" and code["state_name"] not in absentees) or code["abs_ballots"] == "Yes"):
-                continue
 
 
             if "DRE" in code["equipment_type"]:
@@ -146,7 +72,10 @@ def process(place, year, prepend):
                     vvpat_count += code_count
 
                 if "TSX" in code["model"] or "TSx" in code["model"]:
-                    accuvote += code_count
+                    if code["state_name"] in doubles: 
+                        accuvote += code_count/2
+                    else:
+                        accuvote += code_count
                 elif "TS" in code["model"]:
                     ts += code_count
                 elif "WinVote" in code["model"]:
@@ -157,7 +86,7 @@ def process(place, year, prepend):
                 if code["model"] not in code_list:
                     code_list.append(code["model"])
 
-
+            # no double counting
             if code["name"] not in seen_precincts:
                 seen_precincts.append(code["name"])
 
