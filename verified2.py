@@ -3,7 +3,9 @@ import locale
 
 locale.setlocale(locale.LC_ALL, 'en_US')
 
-state_level = ["Alaska"]
+state_level = ["Alaska", "Wisconsin", "Vermont"]
+
+mail = ["Colorado", "Oregon", "Washington"]
 
 
 def process(year):
@@ -11,7 +13,7 @@ def process(year):
         data = json.load(file)
 
         states = {}
-        states_info = {} 
+        states_info = { "Nation":{"registration":0, "dre":0, "vvpat":0, "equipment":{}}} 
 
         # reorganize stuff into a {state:{county:[codes]}}
         for code in data["codes"]:
@@ -22,7 +24,7 @@ def process(year):
                      states[code["state_name"]][code["name"]] = [code]
             else:
                 states[code["state_name"]] = {code["name"]:[code]}
-                states_info[code["state_name"]] = {"registration":0}
+                states_info[code["state_name"]] = {"registration":0, "dre":0, "vvpat":0, "equipment":{}}
 
 
         for state, name in states.iteritems():
@@ -33,25 +35,57 @@ def process(year):
             for precinct, codes in sorted(name.iteritems()):
                 if state not in state_level and precinct == state:
                     continue
+                if state in state_level and precinct != state:
+                    continue
+                
 
                 dre_backup = False
+                vvpat = False
 
                 # get number of voters in this precinct
-                registration = codes[0]["registration"]
+                registration = int(codes[0]["registration"])
 
-#                if not code["equipment_type"].contains("DRE") and code["polling_place"]:
-#                    dre_backup = True
+                for code in codes:
 
-                states_info[state]["registration"] += int(registration)
+                    if state == "Wisconsin":
+                        print code
+                    if "DRE" not in code["equipment_type"] and code["polling_place"] == "Yes":
+                        dre_backup = True
+                    if "DRE" in code["equipment_type"] and code["vvpat"] == "0":
+                        vvpat = True
+
+                if not dre_backup and state not in mail and code["equipment_type"] != "":
+                    states_info[state]["dre"] += registration
+                    states_info["Nation"]["dre"] += registration
+                    if vvpat:
+                        states_info[state]["vvpat"] += registration
+                        states_info["Nation"]["vvpat"] += registration
+                    if code["model"] in states_info[state]["equipment"]:
+                        states_info[state]["equipment"][code["model"]] += registration
+                    else:
+                        states_info[state]["equipment"][code["model"]] = registration
+
+                states_info[state]["registration"] += registration
+                states_info["Nation"]["registration"] += registration
 
 
         national = 0
         for state, info in sorted(states_info.items()):
-            national += info["registration"]
-            print("{:25s}{:>11}".format)(state, str(locale.format("%d", info["registration"], grouping=True)))
+            count = info["registration"]
+            dre = info["dre"]
+            paper = info["vvpat"]
+            national += count
+            print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {: >6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
+            print info["equipment"]
+
+
+#            print("{:25s}{:>11} %DRE:{:>3.2f}% %NoPaper:{>3.2f}%".format(state, locale.format("%d", count, (grouping=True)), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
                 
     
-        print("{:25s}{:>11}".format)("Nation", str(locale.format("%d", national, grouping=True)))
+        count = states_info["Nation"]["registration"]
+        dre = states_info["Nation"]["dre"]
+        paper = states_info["Nation"]["vvpat"]
+        print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {: >6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
             
 
 
