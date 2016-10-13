@@ -67,7 +67,7 @@ def process(year):
                     if "DRE" in code["equipment_type"] and code["vvpat"] == "0":
                         vvpat = True
 
-                if not dre_backup and state not in mail and code["equipment_type"] != "" and (state == "Utah" and precinct not in mail):
+                if not dre_backup and state not in mail and code["equipment_type"] != "" and not (state == "Utah" and precinct in mail):
                     states_info[state]["dre"] += registration
                     states_info["Nation"]["dre"] += registration
                     if vvpat:
