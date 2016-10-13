@@ -3,7 +3,9 @@ import locale
 
 locale.setlocale(locale.LC_ALL, 'en_US')
 
-state_level = ["Alaska", "Wisconsin", "Vermont"]
+# States that have most of their data in state-level, not county-level, form
+state_level = ["Alaska", "Wisconsin", "Vermont", "Maine", "Massachusetts", "Connecticut", 
+                "New Hampshire", "Rhode Island"]
 
 mail = ["Colorado", "Oregon", "Washington"]
 
@@ -39,6 +41,8 @@ def process(year):
                     continue
                 
 
+                # Many states use DREs as acceissible backups for optical scan systems,
+                # so most voters won't actually use DREs. Accounting for this.
                 dre_backup = False
                 vvpat = False
 
@@ -47,8 +51,6 @@ def process(year):
 
                 for code in codes:
 
-                    if state == "Wisconsin":
-                        print code
                     if "DRE" not in code["equipment_type"] and code["polling_place"] == "Yes":
                         dre_backup = True
                     if "DRE" in code["equipment_type"] and code["vvpat"] == "0":
@@ -68,15 +70,17 @@ def process(year):
                 states_info[state]["registration"] += registration
                 states_info["Nation"]["registration"] += registration
 
+        print year, "\n"
 
         national = 0
         for state, info in sorted(states_info.items()):
+            if state == "Nation":
+                continue
             count = info["registration"]
             dre = info["dre"]
             paper = info["vvpat"]
             national += count
             print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {: >6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
-            print info["equipment"]
 
 
 #            print("{:25s}{:>11} %DRE:{:>3.2f}% %NoPaper:{>3.2f}%".format(state, locale.format("%d", count, (grouping=True)), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
