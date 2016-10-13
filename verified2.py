@@ -5,9 +5,15 @@ locale.setlocale(locale.LC_ALL, 'en_US')
 
 # States that have most of their data in state-level, not county-level, form
 state_level = ["Alaska", "Wisconsin", "Vermont", "Maine", "Massachusetts", "Connecticut", 
-                "New Hampshire", "Rhode Island"]
+                "New Hampshire", "Rhode Island", "Idaho"]
+
+mixed = ["Hawaii", "Utah", "New York", "Arkansas", "Iowa", "Oklahoma"]
 
 mail = ["Colorado", "Oregon", "Washington"]
+
+# Roughly half of Utah is vote-by-mail only
+county_mail = ["Weber", "Davis", "Summit", "Duchesne", "Carbon", "Grand", "Sevier", "Beaver", 
+                "Garfield", "San Juan"]
 
 
 def process(year):
@@ -35,9 +41,14 @@ def process(year):
 
             # Look at all codes in each precint
             for precinct, codes in sorted(name.iteritems()):
-                if state not in state_level and precinct == state:
+                # get number of voters in this precinct
+                registration = int(codes[0]["registration"])
+
+                if state not in state_level and precinct == state and state not in mixed:
+                    if state == "Mississippi":
+                        states_info["Mississippi"]["registration"] = registration
                     continue
-                if state in state_level and precinct != state:
+                if state in state_level and precinct != state and state not in mixed:
                     continue
                 
 
@@ -46,17 +57,17 @@ def process(year):
                 dre_backup = False
                 vvpat = False
 
-                # get number of voters in this precinct
-                registration = int(codes[0]["registration"])
 
                 for code in codes:
 
+                    if state == "Utah":
+                        print code 
                     if "DRE" not in code["equipment_type"] and code["polling_place"] == "Yes":
                         dre_backup = True
                     if "DRE" in code["equipment_type"] and code["vvpat"] == "0":
                         vvpat = True
 
-                if not dre_backup and state not in mail and code["equipment_type"] != "":
+                if not dre_backup and state not in mail and code["equipment_type"] != "" and (state == "Utah" and precinct not in mail):
                     states_info[state]["dre"] += registration
                     states_info["Nation"]["dre"] += registration
                     if vvpat:
@@ -67,8 +78,10 @@ def process(year):
                     else:
                         states_info[state]["equipment"][code["model"]] = registration
 
-                states_info[state]["registration"] += registration
-                states_info["Nation"]["registration"] += registration
+                # Mississippi is weird
+                if state != "Mississippi":
+                    states_info[state]["registration"] += registration
+                    states_info["Nation"]["registration"] += registration
 
         print year, "\n"
 
