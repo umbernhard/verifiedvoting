@@ -3,13 +3,6 @@ import locale
 
 locale.setlocale(locale.LC_ALL, 'en_US')
 
-# States that have most of their data in state-level, not county-level, form
-state_level = ["Alaska", "Wisconsin", "Vermont", "Maine", "Massachusetts", "Connecticut", 
-                "New Hampshire", "Rhode Island", "Idaho"]
-
-mixed = ["Hawaii", "Utah", "New York", "Arkansas", "Iowa", "Oklahoma"]
-
-mail = ["Colorado", "Oregon", "Washington"]
 
 # Roughly half of Utah is vote-by-mail only
 county_mail = ["Weber", "Davis", "Summit", "Duchesne", "Carbon", "Grand", "Sevier", "Beaver", 
@@ -19,81 +12,64 @@ with open("verified_pop.csv") as f:
     reader = list(csv.reader(f))
     data = [{}]
     i = 0
-    for row in reader:
+    for row in reader[1:]:
         j = 0
-        print row
         data.append({})
         for key in reader[0]:
             data[i][key] = row[j]
             j += 1
 
-        print j
         i += 1
-
-    states = {}
+    precincts = {}
     states_info = { "Nation":{"population":0, "dre":0, "vvpat":0, "equipment":{}}}
 
     # reorganize stuff into a {state:{county:[codes]}}
     for code in data:
         if code == {}:
             continue
-        if code["state"] in states.keys():
-            if code["county"] in states[code["state"]].keys():
-                states[code["state"]][code["county"]].append(code)
-            else:
-                 states[code["state"]][code["county"]] = [code]
+        if code["fips_code"] in precincts.keys():
+            precincts[code["fips_code"]].append(code)
         else:
-            states[code["state"]] = {code["county"]:[code]}
+            precincts[code["fips_code"]] = [code]
             states_info[code["state"]] = {"population":0, "dre":0, "vvpat":0, "equipment":{}}
 
 
-    for state, name in states.iteritems():
+    seen_fips = []
+    for name in precincts.values():
+
+        state = name[0]["state"]
+
 
         state_registered = 0
 
-        # Look at all codes in each precint
-        for precinct, codes in sorted(name.iteritems()):
-            # get number of voters in this precinct
-            population = int(codes[0]["population"].replace(",",""))
-
-            if state not in state_level and precinct == state and state not in mixed:
-                if state == "Mississippi":
-                    states_info["Mississippi"]["population"] = population
+        dre = False 
+        # Look at all codes in each precicnt
+        for code in name:
+            if code["fips_code"] in seen_fips:
                 continue
-            if state in state_level and precinct != state and state not in mixed:
+
+            if code == {}:
                 continue
-            
 
-            # Many states use DREs as acceissible backups for optical scan systems,
-            # so most voters won't actually use DREs. Accounting for this.
-            dre_backup = False
-            vvpat = False
+            # This is an accessible backup 
+            if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"]:
+                dre = True
 
+        # get number of voters in this precinct
+        population = int(name[0]["population"])
 
-            for code in codes:
+        if dre:
+            states_info[state]["dre"] += population
+            states_info["Nation"]["dre"] += population
+#                if code["model"] in states_info[state]["equipment"]:
+#                    states_info[state]["equipment"][code["model"]] += population
+#                else:
+#                    states_info[state]["equipment"][code["model"]] = population
+        
+        states_info[state]["population"] += population
+        states_info["Nation"]["population"] += population
 
-                if "DRE" not in code["equip_typ"] and code["polling_place"] == "Yes":
-                    dre_backup = True
-                if "DRE" in code["equip_typ"] and code["vvpat"] == "0":
-                    vvpat = True
-
-            if not dre_backup and state not in mail and code["equip_typ"] != "" and not (state == "Utah" and precinct in mail):
-                states_info[state]["dre"] += population
-                states_info["Nation"]["dre"] += population
-                if vvpat:
-                    states_info[state]["vvpat"] += population
-                    states_info["Nation"]["vvpat"] += population
-                if code["model"] in states_info[state]["equipment"]:
-                    states_info[state]["equipment"][code["model"]] += population
-                else:
-                    states_info[state]["equipment"][code["model"]] = population
-
-            # Mississippi is weird
-            if state != "Mississippi":
-                states_info[state]["population"] += population
-                states_info["Nation"]["population"] += population
-
-    print year, "\n"
+        seen_fips.append(code["fips_code"])
 
     national = 0
     for state, info in sorted(states_info.items()):
@@ -103,9 +79,8 @@ with open("verified_pop.csv") as f:
         if count == 0:
             count = .000000001
         dre = info["dre"]
-        paper = info["vvpat"]
         national += count
-        print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {: >6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
+        print("{:25s}{:>11} \t %DRE: {: >6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count))
 
 
 #            print("{:25s}{:>11} %DRE:{:>3.2f}% %NoPaper:{>3.2f}%".format(state, locale.format("%d", count, (grouping=True)), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
@@ -113,8 +88,7 @@ with open("verified_pop.csv") as f:
 
     count = states_info["Nation"]["population"]
     dre = states_info["Nation"]["dre"]
-    paper = states_info["Nation"]["vvpat"]
-    print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {: >6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
+    print("{:25s}{:>11} \t %DRE: {: >6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count))
 
 
 
