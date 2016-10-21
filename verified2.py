@@ -60,8 +60,6 @@ def process(year):
 
                 for code in codes:
 
-                    if state == "Utah":
-                        print code 
                     if "DRE" not in code["equipment_type"] and code["polling_place"] == "Yes":
                         dre_backup = True
                     if "DRE" in code["equipment_type"] and code["vvpat"] == "0":
@@ -90,6 +88,8 @@ def process(year):
             if state == "Nation":
                 continue
             count = info["registration"]
+            if count == 0:
+                count = .000000001
             dre = info["dre"]
             paper = info["vvpat"]
             national += count
@@ -106,6 +106,8 @@ def process(year):
             
 
 
+process("2012")
+process("2014")
 process("2016")
 
 
