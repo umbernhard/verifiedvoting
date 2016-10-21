@@ -73,8 +73,10 @@ with open("population.csv") as fi:
             if "%" in row[3]:
                 row[3] = 0
             if row[0] in ca_fips:
+                # California seems to have duplication in its active/inactive numbers, so rely on active voters. 
                 fips_to_pop[row[0]] = row[1]
             elif row[0] == "3801500000":
+                # We don't have data from North Dakota. This is an estimate of their registered voter pop. 
                 fips_to_pop[row[0]] = "570955"
             else: 
                 fips_to_pop[row[0]] = row[3]
