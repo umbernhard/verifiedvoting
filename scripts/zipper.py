@@ -61,8 +61,8 @@ ca_fips = [
 "0611500000"
 ]
 
-with open("population.csv") as fi:
-    with open("Voting.csv") as fo:
+with open("../data/population.csv") as fi:
+    with open("../data/Voting.csv") as fo:
         pop = list(csv.reader(fi))
         vot = list(csv.reader(fo))
 

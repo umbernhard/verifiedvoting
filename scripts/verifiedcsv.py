@@ -24,11 +24,43 @@ def make_map(fips_to_dre):
     svg = open('../assets/USA_Counties_with_FIPS_and_names.svg', 'r').read()
     soup = BeautifulSoup(svg, "html.parser")
 
-    new_tag = soup.new_tag("rect", width="100%", height="100%", fill="white")
-
-    soup.svg.insert(0,new_tag)
     paths = soup.findAll('path')
+    
+    rep_pattern = """<pattern id="repDiagonalHatch" patternUnits="userSpaceOnUse" width="10" height="10">
+        <g xmlns="http://www.w3.org/2000/svg" style="fill:#DE2D26; stroke:black; stroke-width:1">
+            <path d="M0 90 l15,15"/>
+            <path d="M0 75 l30,30"/>
+            <path d="M0 60 l45,45"/>
+            <path d="M0 45 l60,60"/>
+            <path d="M0 30 l75,75"/>
+            <path d="M0 15 l90,90"/>
+            <path d="M0 0 l105,105"/>
+            <path d="M15 0 l90,90"/>
+            <path d="M30 0 l75,75"/>
+            <path d="M45 0 l60,60"/>
+            <path d="M60 0 l45,45"/>
+            <path d="M75 0 l30,30"/>
+            <path d="M90 0 l15,15"/>
+        </g>
+    </pattern>"""
 
+    dem_pattern = """<pattern id="demDiagonalHatch" patternUnits="userSpaceOnUse" width="10" height="10">
+        <g xmlns="http://www.w3.org/2000/svg" style="fill:#448DAC; stroke:black; stroke-width:1">
+            <path d="M0 90 l15,15"/>
+            <path d="M0 75 l30,30"/>
+            <path d="M0 60 l45,45"/>
+            <path d="M0 45 l60,60"/>
+            <path d="M0 30 l75,75"/>
+            <path d="M0 15 l90,90"/>
+            <path d="M0 0 l105,105"/>
+            <path d="M15 0 l90,90"/>
+            <path d="M30 0 l75,75"/>
+            <path d="M45 0 l60,60"/>
+            <path d="M60 0 l45,45"/>
+            <path d="M75 0 l30,30"/>
+            <path d="M90 0 l15,15"/>
+        </g>
+    </pattern>"""
 
 
     # Change colors accordingly
@@ -48,14 +80,14 @@ def make_map(fips_to_dre):
                     rate = 0 
 
                     swing =  fips_to_dre["02000"]["swing"]
-                    opacity = 1 - (abs(50.0 - fips_to_dre["02000"]["prob"])/100)
+                    opacity = (abs(50.0 - fips_to_dre["02000"]["prob"])/65)
 
                 else: 
                     rate += int(fips_to_dre[p['id']]["dre"])
                     rate += int(fips_to_dre[p['id']]["vvpat"])
 
                     swing =  fips_to_dre[p['id']]["swing"]
-                    opacity = 1 - (abs(50.0- fips_to_dre[p['id']]["prob"])/100)
+                    opacity = (abs(50.0- fips_to_dre[p['id']]["prob"])/65)
                     mail =  fips_to_dre[p['id']]["mail"]
 
             except:
@@ -70,27 +102,44 @@ def make_map(fips_to_dre):
                 
                 #stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
                 color_class = int(10 - round(opacity*10))
+
+                if swing == "R":
+                    color = "url(#repDiagonalHatch)"
+                    if mail:
+                        color = rep_mail[0]
+                elif swing == "D":
+                    color = "url(#demDiagonalHatch)" 
+                    if mail:
+                        color = dem_mail[0]
             elif rate == 2:
  #               stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
                 color_class = int(abs(8 - round(opacity*10)))
+
+                if swing == "R":
+                    color = "url(#repDiagonalHatch)"
+                    if mail:
+                        color = rep_mail[0]
+                elif swing == "D":
+                    color = "url(#demDiagonalHatch)" 
+                    if mail:
+                        color = dem_mail[0]
             else:
    #             stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
-                opacity -= .45
                 color_class = 0
-            stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
-
-            if swing == "R":
-                color = rep_colors[color_class]
-
-                if mail:
-                    color = rep_mail[0]
-            elif swing == "D":
-                color = dem_colors[color_class]
-                if mail:
-                    color = dem_mail[0]
-            # This is Ogalal Lakota County, SD. It is the Lakota nation and does not vote
-            else:
-                color = colors[color_class]
+                stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
+                color = "#000000" #colors[color_class]
+#            if swing == "R":
+#                color = rep_colors[color_class]
+#
+#                if mail:
+#                    color = rep_mail[0]
+#            elif swing == "D":
+#                color = dem_colors[color_class]
+#                if mail:
+#                    color = dem_mail[0]
+            # This is Ogalla Lakota County, SD. It is the Lakota nation and does not vote
+#            else:
+#                color = colors[color_class]
 
 
             
@@ -102,7 +151,7 @@ def make_map(fips_to_dre):
         s = s.replace("</defs>", "")
 #        s = s.replace("</sodipodi:namedview>", "")
 #        s = s.replace("showguides=\"true\"\">", "showguides=\"true\"/>")
-        s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\"/>")
+        s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + dem_pattern + rep_pattern + "</defs>")
         output.write(s)
 
 
@@ -176,8 +225,6 @@ with open("../data/verified_pop.csv") as f:
                 mail = True
 
             fips = code["fips_code"]
-        if state == "CO" and mail == False:
-            print name 
 
         # get number of voters in this precinct
         population = int(name[0]["population"])
@@ -190,6 +237,9 @@ with open("../data/verified_pop.csv") as f:
 #                else:
 #                    states_info[state]["equipment"][code["model"]] = population
             vvpat = vvpats[fips]
+            if vvpat:
+                states_info[state]["vvpat"] += population
+                states_info["Nation"]["vvpat"] += population 
 
         fips_to_dre[fips[0:5]] = {"dre":dre, "vvpat":vvpat, "mail": mail, 
                         "swing":state_swing[state]["party"], "prob":state_swing[state]["prob"]}
@@ -203,7 +253,9 @@ with open("../data/verified_pop.csv") as f:
     make_map(fips_to_dre)
 #    print "Map made"
 
+    
     national = 0
+    nat_paper = 0
     for state, info in sorted(states_info.items()):
         if state == "Nation":
             continue
@@ -212,7 +264,8 @@ with open("../data/verified_pop.csv") as f:
             count = .000000001
         dre = info["dre"]
         national += count
-        print("{:25s}{:>11} \t %DRE: {: >6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count))
+        paper = info["vvpat"]
+        print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
 
 
 #            print("{:25s}{:>11} %DRE:{:>3.2f}% %NoPaper:{>3.2f}%".format(state, locale.format("%d", count, (grouping=True)), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
@@ -220,7 +273,8 @@ with open("../data/verified_pop.csv") as f:
 
     count = states_info["Nation"]["population"]
     dre = states_info["Nation"]["dre"]
-    print("{:25s}{:>11} \t %DRE: {: >6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count))
+    nat_paper = states_info["Nation"]["vvpat"]
+    print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*nat_paper)/count))
 
 
 
