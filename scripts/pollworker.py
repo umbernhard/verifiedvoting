@@ -1,4 +1,5 @@
 import csv
+import copy
 import locale
 import json
 from bs4 import BeautifulSoup
@@ -26,8 +27,26 @@ def make_map(fips):
     soup.svg.insert(0,new_tag)
     paths = soup.findAll('path')
 
+    pat = """<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
+            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#FFFF00; stroke-width:2; stroke-opacity:1;">
+            <path d="M-2,2 l4,-4"/>
+            <path d="M0,8 l8,-8"/>
+            <path d="M6,10 l4,-4"/>
+                    </g>
+                        </pattern>"""
+
+
+    vvpattern = """<pattern id="orangeDiagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
+            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#FFFF00; stroke-width:1; stroke-opacity:1;">
+            <path d="M-2,2 l4,-4"/>
+            <path d="M0,8 l8,-8"/>
+            <path d="M6,10 l4,-4"/>
+                    </g>
+        </pattern>"""
     # Change colors accordingly
     path_style = 'font-size:12px;fill-rule:nonzero;fill:'
+
+    dup_paths = []
 
     for p in paths:
         if p['id'] not in ["State_Lines", "separator"]:
@@ -36,60 +55,66 @@ def make_map(fips):
             mail = False
 
             stroke = ";stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-linecap:butt;marker-start:none;stroke-linejoin:bevel;"
-            try:
-                rate = int(fips[p['id']]["score"])
+            try: 
+                if p['id'][0:2] == "02":
+                    rate = 0 
 
-                swing =  fips[p['id']]["swing"]
-                opacity = (abs(50.0- fips[p['id']]["prob"])/65)
+                    swing =  fips["02000"]["swing"]
+                    opacity = (abs(50.0 - fips["02000"]["prob"])/60)
+
+                else: 
+                    rate += int(fips[p['id']]["score"])
+
+                    swing =  fips[p['id']]["swing"]
+                    opacity = (abs(50.0- fips[p['id']]["prob"])/60)
 
             except:
-                color = "#BBBBBB"
+                color = "#000000"
                 opacity = .8
                 
                 stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
                 p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
                 continue
+            if opacity < .2:
+                opacity = .3
             
             if rate == 1:
-                
-                #stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
-                color_class = 10 #int(10 - round(opacity*10))
-                opacity = 1 #- opacity
-            elif rate == 2:
- #               stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
-                color_class = 8 #int(abs(8 - round(opacity*10)))
+                pattern = "url(#diagonalHatch);"                
 
-                opacity = 1 - opacity
+            elif rate == 2:
+                pattern = "url(#diagonalHatch);"                
             else:
-   #             stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
-              #  opacity -= .45
-                color_class = 0
+                pattern = "none;"
             stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
 
             if swing == "R":
-                color = rep_colors[color_class]
+                color = rep_colors[0]
 
-                if mail:
-                    color = rep_mail[0]
             elif swing == "D":
-                color = dem_colors[color_class]
-                if mail:
-                    color = dem_mail[0]
-            # This is Ogalal Lakota County, SD. It is the Lakota nation and does not vote
-            else:
-                color = colors[color_class]
+                color = dem_colors[0]
 
 
             
+
+            dup = copy.copy(p) 
             p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
+            dup['style'] = path_style + pattern
+            dup['id'] = int(p['id']) + 10000000
+            dup_paths.append(dup)
+
+    paths.append(dup_paths)
 
     # Soups is bad at SVG and it should feel bad
-    with open("../output.svg", "w") as output:
+    with open("../pollworkers.svg", "w") as output:
         s = str(soup.prettify())
         s = s.replace("</defs>", "")
-#        s = s.replace("</sodipodi:namedview>", "")
-#        s = s.replace("showguides=\"true\"\">", "showguides=\"true\"/>")
-        s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\"/>")
+        s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + pat + vvpattern + "</defs>")
+        s = s.replace("</svg>", "")
+        for dup in dup_paths:
+            s += str(dup)
+
+        s += "</svg>"
+
         output.write(s)
 
 

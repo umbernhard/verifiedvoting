@@ -1,4 +1,5 @@
 import csv
+import copy
 import locale
 import json
 from bs4 import BeautifulSoup
@@ -26,46 +27,34 @@ def make_map(fips_to_dre):
 
     paths = soup.findAll('path')
     
-    rep_pattern = """<pattern id="repDiagonalHatch" patternUnits="userSpaceOnUse" width="10" height="10">
-        <g xmlns="http://www.w3.org/2000/svg" style="fill:#DE2D26; stroke:black; stroke-width:1">
-            <path d="M0 90 l15,15"/>
-            <path d="M0 75 l30,30"/>
-            <path d="M0 60 l45,45"/>
-            <path d="M0 45 l60,60"/>
-            <path d="M0 30 l75,75"/>
-            <path d="M0 15 l90,90"/>
-            <path d="M0 0 l105,105"/>
-            <path d="M15 0 l90,90"/>
-            <path d="M30 0 l75,75"/>
-            <path d="M45 0 l60,60"/>
-            <path d="M60 0 l45,45"/>
-            <path d="M75 0 l30,30"/>
-            <path d="M90 0 l15,15"/>
+    pat = """<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
+        <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#FFFF00; stroke-width:2; stroke-opacity:1;">
+<path d="M-2,2 l4,-4"/>
+<path d="M0,8 l8,-8"/>
+<path d="M6,10 l4,-4"/>
         </g>
     </pattern>"""
 
-    dem_pattern = """<pattern id="demDiagonalHatch" patternUnits="userSpaceOnUse" width="10" height="10">
-        <g xmlns="http://www.w3.org/2000/svg" style="fill:#448DAC; stroke:black; stroke-width:1">
-            <path d="M0 90 l15,15"/>
-            <path d="M0 75 l30,30"/>
-            <path d="M0 60 l45,45"/>
-            <path d="M0 45 l60,60"/>
-            <path d="M0 30 l75,75"/>
-            <path d="M0 15 l90,90"/>
-            <path d="M0 0 l105,105"/>
-            <path d="M15 0 l90,90"/>
-            <path d="M30 0 l75,75"/>
-            <path d="M45 0 l60,60"/>
-            <path d="M60 0 l45,45"/>
-            <path d="M75 0 l30,30"/>
-            <path d="M90 0 l15,15"/>
+
+    vvpattern = """<pattern id="orangeDiagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
+        <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#FFFF00; stroke-width:1; stroke-opacity:1;">
+<path d="M-2,2 l4,-4"/>
+<path d="M0,8 l8,-8"/>
+<path d="M6,10 l4,-4"/>
         </g>
     </pattern>"""
 
+    mail_pattern = """<pattern id="mail" patternUnits="userSpaceOnUse" width="5" height="5">
+        <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#7bd631; stroke-width:.75">
+<path d="M0,0 l5,5"/>
+    <path d="M5,0 l-5,5"/>
+        </g>
+    </pattern>"""
 
     # Change colors accordingly
     path_style = 'font-size:12px;fill-rule:nonzero;fill:'
 
+    dup_paths = []
 
     for p in paths:
         if p['id'] not in ["State_Lines", "separator"]:
@@ -80,14 +69,14 @@ def make_map(fips_to_dre):
                     rate = 0 
 
                     swing =  fips_to_dre["02000"]["swing"]
-                    opacity = (abs(50.0 - fips_to_dre["02000"]["prob"])/65)
+                    opacity = (abs(50.0 - fips_to_dre["02000"]["prob"])/60)
 
                 else: 
                     rate += int(fips_to_dre[p['id']]["dre"])
                     rate += int(fips_to_dre[p['id']]["vvpat"])
 
                     swing =  fips_to_dre[p['id']]["swing"]
-                    opacity = (abs(50.0- fips_to_dre[p['id']]["prob"])/65)
+                    opacity = (abs(50.0- fips_to_dre[p['id']]["prob"])/60)
                     mail =  fips_to_dre[p['id']]["mail"]
 
             except:
@@ -97,61 +86,73 @@ def make_map(fips_to_dre):
                 stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
                 p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
                 continue
+
+            # lower bound opacity so we can see close states
+            if opacity < .2:
+                opacity = .3
             
             if rate == 1:
                 
                 #stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
-                color_class = int(10 - round(opacity*10))
+    #            color_class = int(10 - round(opacity*10))
 
                 if swing == "R":
-                    color = "url(#repDiagonalHatch)"
-                    if mail:
-                        color = rep_mail[0]
+                    color = rep_colors[0]
                 elif swing == "D":
-                    color = "url(#demDiagonalHatch)" 
-                    if mail:
-                        color = dem_mail[0]
+                    color = dem_colors[0] 
+
+                pattern = "url(#diagonalHatch);"
+#                if mail:
+#                    pattern = "url(#mail);"
             elif rate == 2:
  #               stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
-                color_class = int(abs(8 - round(opacity*10)))
+#                color_class = int(abs(8 - round(opacity*10)))
 
                 if swing == "R":
-                    color = "url(#repDiagonalHatch)"
-                    if mail:
-                        color = rep_mail[0]
+                    color = rep_colors[0]
                 elif swing == "D":
-                    color = "url(#demDiagonalHatch)" 
-                    if mail:
-                        color = dem_mail[0]
+                    color = dem_colors[0] 
+
+                pattern = "url(#orangeDiagonalHatch);"
+
+#                if mail:
+#                    pattern = "url(#mail);"
             else:
    #             stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
                 color_class = 0
                 stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
                 color = "#000000" #colors[color_class]
-#            if swing == "R":
-#                color = rep_colors[color_class]
-#
+                if swing == "R":
+                    color = rep_colors[color_class]
+                elif swing == "D":
+                    color = dem_colors[color_class]
+
+                pattern = "none;"
+
 #                if mail:
-#                    color = rep_mail[0]
-#            elif swing == "D":
-#                color = dem_colors[color_class]
-#                if mail:
-#                    color = dem_mail[0]
-            # This is Ogalla Lakota County, SD. It is the Lakota nation and does not vote
-#            else:
-#                color = colors[color_class]
+#                    pattern = "url(#mail);"
 
 
-            
+            dup = copy.copy(p) 
             p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
+            dup['style'] = path_style + pattern
+            dup['id'] = int(p['id']) + 10000000
+            dup_paths.append(dup)
+
+    paths.append(dup_paths)
+
 
     # Soups is bad at SVG and it should feel bad
-    with open("../output.svg", "w") as output:
+    with open("../dre.svg", "w") as output:
         s = str(soup.prettify())
         s = s.replace("</defs>", "")
-#        s = s.replace("</sodipodi:namedview>", "")
-#        s = s.replace("showguides=\"true\"\">", "showguides=\"true\"/>")
-        s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + dem_pattern + rep_pattern + "</defs>")
+        s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + pat + vvpattern + mail_pattern + "</defs>")
+        s = s.replace("</svg>", "")
+        for dup in dup_paths:
+            s += str(dup)
+
+        s += "</svg>"
+
         output.write(s)
 
 
@@ -162,12 +163,6 @@ with open("../data/verified_pop.csv") as f:
     for item in rb:
         state_swing[item["state"]] = {"party":item["sentences"]["polls"]["party"], 
                                         "prob":item["sentences"]["polls"]["probability"]}
-
-    vvpats = {}
-    vv = json.load(open("../data/2016.json"))
-
-    for item in vv["codes"]:
-        vvpats[item["fips_code"]] = item["vvpat"]
 
 
     reader = list(csv.reader(f))
@@ -196,12 +191,29 @@ with open("../data/verified_pop.csv") as f:
             states_info[code["state"]] = {"population":0, "dre":0, "vvpat":0, "equipment":{}}
 
 
+
+    vvpats = {}
+    vv = json.load(open("../data/2016.json"))
+
+    for item in vv["codes"]:
+        flag = False
+
+        if item["fips_code"] in precincts.keys():
+
+            for code in precincts[item["fips_code"]]:
+                if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"]:
+                    flag = item["vvpat"]
+                    break
+                    
+            vvpats[item["fips_code"]] = flag
+        else:
+            vvpats[item["fips_code"]] = False
     seen_fips = []
     for name in precincts.values():
 
+        state = name[0]["state"]
         vvpat = False
 
-        state = name[0]["state"]
 
 
         state_registered = 0
@@ -210,36 +222,35 @@ with open("../data/verified_pop.csv") as f:
 
         dre = False 
         mail = False
+
+        population = int(name[0]["population"])
         # Look at all codes in each precicnt
         for code in name:
-            if code["fips_code"] in seen_fips:
-                continue
+#            if state == "NV":
+#                print code
+#                print "vvpats: ", vvpats[code["fips_code"]]
 
             if code == {}:
                 continue
 
+            fips = code["fips_code"]
             # This is an accessible backup 
             if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"]:
                 dre = True
+                vvpat = int(vvpats[fips])
             if code["all_vbm"] == "TRUE":
                 mail = True
 
-            fips = code["fips_code"]
-
         # get number of voters in this precinct
-        population = int(name[0]["population"])
 
         if dre:
             states_info[state]["dre"] += population
             states_info["Nation"]["dre"] += population
-#                if code["model"] in states_info[state]["equipment"]:
-#                    states_info[state]["equipment"][code["model"]] += population
-#                else:
-#                    states_info[state]["equipment"][code["model"]] = population
-            vvpat = vvpats[fips]
-            if vvpat:
-                states_info[state]["vvpat"] += population
-                states_info["Nation"]["vvpat"] += population 
+
+        if vvpat:
+            states_info[state]["vvpat"] += population
+            states_info["Nation"]["vvpat"] += population 
+
 
         fips_to_dre[fips[0:5]] = {"dre":dre, "vvpat":vvpat, "mail": mail, 
                         "swing":state_swing[state]["party"], "prob":state_swing[state]["prob"]}
@@ -264,7 +275,7 @@ with open("../data/verified_pop.csv") as f:
             count = .000000001
         dre = info["dre"]
         national += count
-        paper = info["vvpat"]
+        paper = dre - info["vvpat"]
         print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
 
 
@@ -273,7 +284,7 @@ with open("../data/verified_pop.csv") as f:
 
     count = states_info["Nation"]["population"]
     dre = states_info["Nation"]["dre"]
-    nat_paper = states_info["Nation"]["vvpat"]
+    nat_paper = dre - states_info["Nation"]["vvpat"]
     print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*nat_paper)/count))
 
 
