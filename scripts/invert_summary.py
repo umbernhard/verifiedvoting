@@ -118,7 +118,7 @@ def make_map(fips_to_dre):
                 elif swing == "D":
                     color = dem_colors[0] 
 
-                pattern = "url(#diagonalHatch);"
+                pattern = "url(#orangeDiagonalHatch);"
 
 #                if mail:
 #                    pattern = "url(#mail);"
@@ -137,7 +137,7 @@ def make_map(fips_to_dre):
 #                if mail:
 #                    pattern = "url(#mail);"
 
-            #iopacity = 1 - opacity
+            opacity = 1 - opacity
             if opacity < .2:
                 opacity = .3
             
@@ -151,7 +151,7 @@ def make_map(fips_to_dre):
 
 
     # Soups is bad at SVG and it should feel bad
-    with open("../summary.svg", "w") as output:
+    with open("../invert_summary.svg", "w") as output:
         s = str(soup.prettify())
         s = s.replace("</defs>", "")
         s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + pat + vvpattern + mail_pattern + "</defs>")
@@ -322,7 +322,7 @@ with open("../data/verified_pop.csv") as f:
             turn = 1 
 
         if row[0][0:5] in fips_to_dre.keys():
-            fips_to_dre[row[0][0:5]]["2012_absentee"] = absent/turn
+            fips_to_dre[row[0][0:5]]["2012_absentee"]  = absent/turn 
            
     # zip fips and responses, cleaning responses
     for row in csv.reader(open("../data/pollworker.csv")):

@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 locale.setlocale(locale.LC_ALL, 'en_US')
 
 # Roughly half of Utah is vote-by-mail only
-county_mail = ["Weber", "Davis", "Summit", "Duchesne", "Carbon", "Grand", "Sevier", "Beaver", 
-                "Garfield", "San Juan"]
+county_mail = ["49057", "49011", "49043", "49013", "49007", "49019", "49041", "49001", 
+                "49017", "49037"]
 
 def make_map(fips):
     ### Purple/Red color scheme. Replace line below with colors above to try others.
@@ -155,10 +155,8 @@ with open("../data/absentee_2012.csv") as f:
         if turnout[row[0]] > 0:
             turn = turnout[row[0]]
 
-        if state == "OR" or state == "WA" or state == "CO":
+        if state == "OR" or state == "WA" or state == "CO" or row[0][0:5] in county_mail:
             turn = 1 
-        if state == "AZ":
-            print absent/turn
         fips[row[0][0:5]] = {"2012_score":absent/turn,"swing":state_swing[state]["party"], 
                                                     "prob":state_swing[state]["prob"]} 
 
@@ -176,16 +174,14 @@ with open("../data/absentee_2012.csv") as f:
                 turn = turnout_2014[row[0]]
             
 
-        if state == "OR" or state == "WA" or state == "CO":
+        if state == "OR" or state == "WA" or state == "CO" or row[0][0:5] in county_mail:
             turn = 1 
-        if state == "AZ":
-            print absent/turn
         
         if row[0][0:5] in fips.keys():
             fips[row[0][0:5]]["2014_score"] = absent/turn
         else: 
-            fips[row[0][0:5]] = {"2012_score":0, "2014_score":absent/turn, "swing":state_swing[state]["party"], 
-                                                    "prob":state_swing[state]["prob"]} 
+            fips[row[0][0:5]] = {"2012_score":0, "2014_score":absent/turn, 
+                    "swing":state_swing[state]["party"], "prob":state_swing[state]["prob"]} 
         
 
 #    print "Making map"

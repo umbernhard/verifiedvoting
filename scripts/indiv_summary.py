@@ -96,7 +96,7 @@ def make_map(fips_to_dre):
                 continue
 
             # lower bound opacity so we can see close states
-            if rate > 0: # and opacity < .4:
+            if rate > 0 and opacity < .4:
                 
                 #stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
     #            color_class = int(10 - round(opacity*10))
@@ -109,7 +109,7 @@ def make_map(fips_to_dre):
                 pattern = "url(#diagonalHatch);"
 #                if mail:
 #                    pattern = "url(#mail);"
-            elif (poll == 1 or absentee > .8 or absentee_12 > .8): # and opacity < .4:
+            elif (poll == 1 or absentee > .8 or absentee_12 > .8) and opacity < .4:
  #               stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
 #                color_class = int(abs(8 - round(opacity*10)))
 
@@ -118,7 +118,7 @@ def make_map(fips_to_dre):
                 elif swing == "D":
                     color = dem_colors[0] 
 
-                pattern = "url(#diagonalHatch);"
+                pattern = "url(#orangeDiagonalHatch);"
 
 #                if mail:
 #                    pattern = "url(#mail);"
@@ -137,7 +137,7 @@ def make_map(fips_to_dre):
 #                if mail:
 #                    pattern = "url(#mail);"
 
-            #iopacity = 1 - opacity
+            opacity = 1 - opacity
             if opacity < .2:
                 opacity = .3
             
@@ -151,7 +151,7 @@ def make_map(fips_to_dre):
 
 
     # Soups is bad at SVG and it should feel bad
-    with open("../summary.svg", "w") as output:
+    with open("../indiv_summary.svg", "w") as output:
         s = str(soup.prettify())
         s = s.replace("</defs>", "")
         s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + pat + vvpattern + mail_pattern + "</defs>")
@@ -322,7 +322,7 @@ with open("../data/verified_pop.csv") as f:
             turn = 1 
 
         if row[0][0:5] in fips_to_dre.keys():
-            fips_to_dre[row[0][0:5]]["2012_absentee"] = absent/turn
+            fips_to_dre[row[0][0:5]]["2012_absentee"]  = absent/turn
            
     # zip fips and responses, cleaning responses
     for row in csv.reader(open("../data/pollworker.csv")):
