@@ -28,7 +28,7 @@ def make_map(fips):
     paths = soup.findAll('path')
 
     pat = """<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
-            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#FFFF00; stroke-width:2; stroke-opacity:1;">
+            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#78e840; stroke-width:2; stroke-opacity:1;">
             <path d="M-2,2 l4,-4"/>
             <path d="M0,8 l8,-8"/>
             <path d="M6,10 l4,-4"/>
@@ -37,7 +37,7 @@ def make_map(fips):
 
 
     vvpattern = """<pattern id="orangeDiagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
-            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#FFFF00; stroke-width:1; stroke-opacity:1;">
+            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#78e840; stroke-width:1; stroke-opacity:1;">
             <path d="M-2,2 l4,-4"/>
             <path d="M0,8 l8,-8"/>
             <path d="M6,10 l4,-4"/>
@@ -51,6 +51,7 @@ def make_map(fips):
     for p in paths:
         if p['id'] not in ["State_Lines", "separator"]:
             rate = 0 
+            rate_14 = 0
             swing = ""
             mail = False
 
@@ -63,7 +64,9 @@ def make_map(fips):
                     opacity = (abs(50.0 - fips["02000"]["prob"])/60)
 
                 else: 
-                    rate += (fips[p['id']]["score"])
+                    rate += (fips[p['id']]["2012_score"])
+                    rate_14 = (fips[p['id']]["2014_score"])
+
 
                     swing =  fips[p['id']]["swing"]
                     opacity = (abs(50.0- fips[p['id']]["prob"])/60)
@@ -78,7 +81,7 @@ def make_map(fips):
             if opacity < .2:
                 opacity = .3
             
-            if rate > .5:
+            if rate > .5 or rate_14 > .5:
                 pattern = "url(#diagonalHatch);"                
             else:
                 pattern = "none;"
@@ -102,7 +105,7 @@ def make_map(fips):
     paths.append(dup_paths)
 
     # Soups is bad at SVG and it should feel bad
-    with open("../absentee_2012.svg", "w") as output:
+    with open("../absentee.svg", "w") as output:
         s = str(soup.prettify())
         s = s.replace("</defs>", "")
         s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + pat + vvpattern + "</defs>")
@@ -133,6 +136,13 @@ with open("../data/absentee_2012.csv") as f:
             turn = int(line[1])
         turnout[line[0]] = turn
 
+    turnout_2014 = {}
+    for line in csv.reader(open("../data/turnout.csv")):
+        turn = 0
+        if line[1] != '':
+            turn = int(line[1])
+        turnout[line[0]] = turn
+
     fips = {}
     # zip fips and responses, cleaning responses
     for row in csv.reader(f):
@@ -149,8 +159,34 @@ with open("../data/absentee_2012.csv") as f:
             turn = 1 
         if state == "AZ":
             print absent/turn
-        fips[row[0][0:5]] = {"score":absent/turn,"swing":state_swing[state]["party"], 
+        fips[row[0][0:5]] = {"2012_score":absent/turn,"swing":state_swing[state]["party"], 
                                                     "prob":state_swing[state]["prob"]} 
+
+
+    # zip fips and responses, cleaning responses
+    for row in csv.reader(open("../data/absentee.csv")):
+        state = state_fips[row[0][0:2]]
+        absent = 0
+        if row[1] != '':
+            absent = float(row[1])
+        
+        turn = 1000000000
+        if row[0] in turnout_2014.keys():
+            if turnout_2014[row[0]] > 0:
+                turn = turnout_2014[row[0]]
+            
+
+        if state == "OR" or state == "WA" or state == "CO":
+            turn = 1 
+        if state == "AZ":
+            print absent/turn
+        
+        if row[0][0:5] in fips.keys():
+            fips[row[0][0:5]]["2014_score"] = absent/turn
+        else: 
+            fips[row[0][0:5]] = {"2012_score":0, "2014_score":absent/turn, "swing":state_swing[state]["party"], 
+                                                    "prob":state_swing[state]["prob"]} 
+        
 
 #    print "Making map"
     make_map(fips)
