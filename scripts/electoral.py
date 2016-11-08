@@ -47,8 +47,11 @@ def make_map(states_info):
             for state in states:
                 name = state['class'][1]
 
+                print name
+
                 at_risk = 0
-                if states_info[name]["dre"] > 0:
+                if (1.0*states_info[name]["dre"])/states_info[name]["population"] > .45:
+                    print "dre"
                     at_risk = 1
                 elif states_info[name]["absentee"]/states_info[name]["turnout"] > .8:
                     at_risk = 1
@@ -187,6 +190,8 @@ with open("../data/verified_pop.csv") as f:
         if vvpat:
             states_info[state]["vvpat"] += population
             states_info["Nation"]["vvpat"] += population 
+
+        states_info[state]["population"] += population
 
 
         seen_fips.append(code["fips_code"])

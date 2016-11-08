@@ -28,7 +28,7 @@ def make_map(fips):
     paths = soup.findAll('path')
 
     pat = """<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
-            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:purple; stroke-width:2; stroke-opacity:1;">
+            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#ffc85b; stroke-width:2; stroke-opacity:1;">
             <path d="M-2,2 l4,-4"/>
             <path d="M0,8 l8,-8"/>
             <path d="M6,10 l4,-4"/>
@@ -36,8 +36,8 @@ def make_map(fips):
                         </pattern>"""
 
 
-    vvpattern = """<pattern id="orangeDiagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
-            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:purple; stroke-width:1; stroke-opacity:1;">
+    vvpattern = """<pattern id="#ffc85bDiagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
+            <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#ffc85b; stroke-width:1; stroke-opacity:1;">
             <path d="M-2,2 l4,-4"/>
             <path d="M0,8 l8,-8"/>
             <path d="M6,10 l4,-4"/>

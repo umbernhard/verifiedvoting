@@ -96,7 +96,9 @@ def make_map(fips_to_dre):
                 continue
 
             # lower bound opacity so we can see close states
-            if rate > 0: # and opacity < .4:
+            if (((rate > 0) and poll == 1) or 
+                    ((rate > 0) and (absentee > .8 or absentee_12 > .8)) or
+                            (poll == 1 and (absentee > .8 or absentee_12 > .8))): 
                 
                 #stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
     #            color_class = int(10 - round(opacity*10))
@@ -106,10 +108,11 @@ def make_map(fips_to_dre):
                 elif swing == "D":
                     color = dem_colors[0] 
 
-                pattern = "url(#diagonalHatch);"
+                pattern = "yellow;opacity:.8;stroke-width:.2;stroke:black" #url(#diagonalHatch);"
+                
 #                if mail:
 #                    pattern = "url(#mail);"
-            elif (poll == 1 or absentee > .8 or absentee_12 > .8): # and opacity < .4:
+            elif (rate > 0 or poll == 1 or absentee > .8 or absentee_12 > .8): # and opacity < .4:
  #               stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
 #                color_class = int(abs(8 - round(opacity*10)))
 
@@ -118,7 +121,7 @@ def make_map(fips_to_dre):
                 elif swing == "D":
                     color = dem_colors[0] 
 
-                pattern = "url(#diagonalHatch);"
+                pattern = "url(#orangeDiagonalHatch);"
 
 #                if mail:
 #                    pattern = "url(#mail);"
