@@ -177,7 +177,7 @@ with open("../data/verified_pop.csv") as f:
 
         i += 1
     precincts = {}
-    states_info = { "Nation":{"population":0, "dre":0, "vvpat":0, "equipment":{}}}
+    states_info = { "Nation":{"population":0, "dre":0, "opscan":0, "vvpat":0, "equipment":{}}}
     fips_to_dre = {}
 
     # reorganize stuff into a {state:{county:[codes]}}
@@ -188,7 +188,7 @@ with open("../data/verified_pop.csv") as f:
             precincts[code["fips_code"]].append(code)
         else:
             precincts[code["fips_code"]] = [code]
-            states_info[code["state"]] = {"population":0, "dre":0, "vvpat":0, "equipment":{}}
+            states_info[code["state"]] = {"population":0, "dre":0, "opscan":0, "vvpat":0, "equipment":{}}
 
 
 
@@ -204,6 +204,8 @@ with open("../data/verified_pop.csv") as f:
                 if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"]:
                     flag = item["vvpat"]
                     break
+
+
                     
             vvpats[item["fips_code"]] = flag
         else:
@@ -222,6 +224,8 @@ with open("../data/verified_pop.csv") as f:
 
         dre = False 
         mail = False
+        opscan = False
+        equip = ""
 
         population = int(name[0]["population"])
         # Look at all codes in each precicnt
@@ -238,8 +242,13 @@ with open("../data/verified_pop.csv") as f:
             if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"]:
                 dre = True
                 vvpat = int(vvpats[fips])
+
+            elif code["pp_std"] == "TRUE" and "Optical Scan" in code["equip_type"]:
+                opscan = True
+                equip = code["model"]
             if code["all_vbm"] == "TRUE":
                 mail = True
+
 
         # get number of voters in this precinct
 
@@ -250,7 +259,13 @@ with open("../data/verified_pop.csv") as f:
         if vvpat:
             states_info[state]["vvpat"] += population
             states_info["Nation"]["vvpat"] += population 
-
+        if opscan:
+            states_info[state]["opscan"] += population
+            states_info["Nation"]["opscan"] += population 
+            if equip in states_info[state]["equipment"].keys():
+                states_info[state]["equipment"][equip] += population
+            else:
+                states_info[state]["equipment"][equip] = population
 
         fips_to_dre[fips[0:5]] = {"dre":dre, "vvpat":vvpat, "mail": mail, 
                         "swing":state_swing[state]["party"], "prob":state_swing[state]["prob"]}
@@ -276,7 +291,11 @@ with open("../data/verified_pop.csv") as f:
         dre = info["dre"]
         national += count
         paper = dre - info["vvpat"]
-        print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
+        opscan = info["opscan"]
+        print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}% \t %OpScan: {:>6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count, 100*(1.0*opscan)/count))
+        
+        for key in info["equipment"].keys():
+            print("\t {:25s} \t %Equip: {:>6.2f}%".format(key, 100*(1.0*info["equipment"][key])/count))
 
 
 #            print("{:25s}{:>11} %DRE:{:>3.2f}% %NoPaper:{>3.2f}%".format(state, locale.format("%d", count, (grouping=True)), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
