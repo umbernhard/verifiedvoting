@@ -267,6 +267,11 @@ with open("../data/verified_pop.csv") as f:
             else:
                 states_info[state]["equipment"][equip] = population
 
+            if equip in states_info["Nation"]["equipment"].keys():
+                states_info["Nation"]["equipment"][equip] += population
+            else:
+                states_info["Nation"]["equipment"][equip] = population
+
         fips_to_dre[fips[0:5]] = {"dre":dre, "vvpat":vvpat, "mail": mail, 
                         "swing":state_swing[state]["party"], "prob":state_swing[state]["prob"]}
         
@@ -304,8 +309,11 @@ with open("../data/verified_pop.csv") as f:
     count = states_info["Nation"]["population"]
     dre = states_info["Nation"]["dre"]
     nat_paper = dre - states_info["Nation"]["vvpat"]
-    print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*nat_paper)/count))
+    opscan = states_info["Nation"]["opscan"]
+    print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}% \t %OpScan: {:>6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*nat_paper)/count, 100*(1.0*opscan)/count))
 
+    for key in states_info["Nation"]["equipment"].keys():
+        print("\t {:25s} \t %Equip: {:>6.2f}%".format(key, 100*(1.0*states_info["Nation"]["equipment"][key])/count))
 
 
             
