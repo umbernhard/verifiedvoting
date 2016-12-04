@@ -70,6 +70,7 @@ def make_map(fips_to_dre):
 
                     swing =  fips_to_dre["02000"]["swing"]
                     opacity = (abs(50.0 - fips_to_dre["02000"]["prob"])/60)
+                    opacity = .2
 
                 else: 
                     rate += int(fips_to_dre[p['id']]["dre"])
@@ -81,17 +82,20 @@ def make_map(fips_to_dre):
 
             except:
                 color = "#000000"
-                opacity = .8
+                opacity = .2
                 
                 stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
                 p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
                 continue
 
-            # lower bound opacity so we can see close states
-            if opacity < .2:
-                opacity = .3
-            
-            if rate == 1:
+
+            opacity = .2
+
+            if p['id'][0:2] == "55" or p['id'][0:2] == "26" or p['id'][0:2] == "42":
+                print p['id']
+                opacity = 1 
+
+            if rate == 2:
                 
                 #stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
     #            color_class = int(10 - round(opacity*10))
@@ -101,10 +105,15 @@ def make_map(fips_to_dre):
                 elif swing == "D":
                     color = dem_colors[0] 
 
-                pattern = "url(#diagonalHatch);"
+                pattern = "#7fcdbb" #"url(#diagonalHatch);"
+
+                opacity = .2
+                if p['id'][0:2] == "55" or p['id'][0:2] == "26" or p['id'][0:2] == "42":
+                    print p['id']
+                    opacity = 1 
 #                if mail:
 #                    pattern = "url(#mail);"
-            elif rate == 2:
+            elif rate == 1:
  #               stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
 #                color_class = int(abs(8 - round(opacity*10)))
 
@@ -113,7 +122,12 @@ def make_map(fips_to_dre):
                 elif swing == "D":
                     color = dem_colors[0] 
 
-                pattern = "url(#orangeDiagonalHatch);"
+                pattern = "#2c7fb8" #"url(#orangeDiagonalHatch);"
+
+                opacity = .2
+                if p['id'][0:2] == "55" or p['id'][0:2] == "26" or p['id'][0:2] == "42":
+                    print p['id']
+                    opacity = 1 
 
 #                if mail:
 #                    pattern = "url(#mail);"
@@ -133,9 +147,10 @@ def make_map(fips_to_dre):
 #                    pattern = "url(#mail);"
 
 
+            color ="#ece7f2"
             dup = copy.copy(p) 
             p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
-            dup['style'] = path_style + pattern
+            dup['style'] = path_style + pattern + stroke + "stroke:#000000;stroke-width:0.1;" + "opacity:" + str(opacity) 
             dup['id'] = int(p['id']) + 10000000
             dup_paths.append(dup)
 
@@ -242,7 +257,6 @@ with open("../data/verified_pop.csv") as f:
             if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"]:
                 dre = True
                 vvpat = int(vvpats[fips])
-                equip = code["model"]
 
             elif code["pp_std"] == "TRUE" and "Optical Scan" in code["equip_type"]:
                 opscan = True
@@ -257,6 +271,12 @@ with open("../data/verified_pop.csv") as f:
             states_info[state]["dre"] += population
             states_info["Nation"]["dre"] += population
 
+        if vvpat:
+            states_info[state]["vvpat"] += population
+            states_info["Nation"]["vvpat"] += population 
+        if opscan:
+            states_info[state]["opscan"] += population
+            states_info["Nation"]["opscan"] += population 
             if equip in states_info[state]["equipment"].keys():
                 states_info[state]["equipment"][equip] += population
             else:
@@ -266,13 +286,6 @@ with open("../data/verified_pop.csv") as f:
                 states_info["Nation"]["equipment"][equip] += population
             else:
                 states_info["Nation"]["equipment"][equip] = population
-
-        if vvpat:
-            states_info[state]["vvpat"] += population
-            states_info["Nation"]["vvpat"] += population 
-        if opscan:
-            states_info[state]["opscan"] += population
-            states_info["Nation"]["opscan"] += population 
 
         fips_to_dre[fips[0:5]] = {"dre":dre, "vvpat":vvpat, "mail": mail, 
                         "swing":state_swing[state]["party"], "prob":state_swing[state]["prob"]}
@@ -286,36 +299,3 @@ with open("../data/verified_pop.csv") as f:
     make_map(fips_to_dre)
 #    print "Map made"
 
-    
-    national = 0
-    nat_paper = 0
-    for state, info in sorted(states_info.items()):
-        if state == "Nation":
-            continue
-        count = info["population"]
-        if count == 0:
-            count = .000000001
-        dre = info["dre"]
-        national += count
-        paper = dre - info["vvpat"]
-        opscan = info["opscan"]
-        print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}% \t %OpScan: {:>6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count, 100*(1.0*opscan)/count))
-        
-        for key in info["equipment"].keys():
-            print("\t {:25s} \t %Equip: {:>6.2f}%".format(key, 100*(1.0*info["equipment"][key])/count))
-
-
-#            print("{:25s}{:>11} %DRE:{:>3.2f}% %NoPaper:{>3.2f}%".format(state, locale.format("%d", count, (grouping=True)), 100*(1.0*dre)/count, 100*(1.0*paper)/count))
-            
-
-    count = states_info["Nation"]["population"]
-    dre = states_info["Nation"]["dre"]
-    nat_paper = dre - states_info["Nation"]["vvpat"]
-    opscan = states_info["Nation"]["opscan"]
-    print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}% \t %OpScan: {:>6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*nat_paper)/count, 100*(1.0*opscan)/count))
-
-    for key in states_info["Nation"]["equipment"].keys():
-        print("\t {:25s} \t %Equip: {:>6.2f}%".format(key, 100*(1.0*states_info["Nation"]["equipment"][key])/count))
-
-
-            

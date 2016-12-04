@@ -77,22 +77,34 @@ with open("../data/wisconsin.csv") as wi:
         division = division.strip()
         division = division.replace(".", "")
 
+
         if "None" in data[2]:
             if "dre" in counties[county].keys():
-                counties[county.upper()]["dre"] += int(precincts[division][0]["population"])
+
+                for item in precincts[division]:
+                    if "DRE" in item["equip_type"] and item["pp_std"] == "TRUE":
+                        counties[county.upper()]["dre"] += int(precincts[division][0]["population"])
+                        counties[county.upper()]["divisions"][division] = int(precincts[division][0]["population"])
             else:
                 counties[county.upper()]["dre"] = int(precincts[division][0]["population"])
+                counties[county.upper()]["divisions"] = {}
+                counties[county.upper()]["divisions"][division] = int(precincts[division][0]["population"])
+
 
 count = 0
+pop = 0
 for county in sorted(counties.keys()):
+    pop += float(counties[county]["reg"].replace(",", ""))
     if "dre" in counties[county].keys():
+        count += counties[county]["dre"]
         dre_rate = counties[county]["dre"]*(float(counties[county]["turnout"].replace("%", ""))/100)/float(counties[county]["reg"])
 
         if dre_rate > .5:
             print county
+#            for division in sorted(counties[county]["divisions"].keys()):
+#                print division, float(counties[county]["divisions"][division])/int(precincts[division][0]["population"])
         
-print (1.0*count)/len(counties)
 
-
+print (1.0*count)/pop
 
 

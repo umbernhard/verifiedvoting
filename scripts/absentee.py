@@ -22,9 +22,6 @@ def make_map(fips):
     svg = open('../assets/USA_Counties_with_FIPS_and_names.svg', 'r').read()
     soup = BeautifulSoup(svg, "html.parser")
 
-    new_tag = soup.new_tag("rect", width="100%", height="100%", fill="white")
-
-    soup.svg.insert(0,new_tag)
     paths = soup.findAll('path')
 
     pat = """<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
@@ -81,8 +78,13 @@ def make_map(fips):
             if opacity < .2:
                 opacity = .3
             
-            if rate > .5 or rate_14 > .5:
-                pattern = "url(#diagonalHatch);"                
+            opacity = .8
+            if rate > .8 or rate_14 > .8:
+                pattern = "#2ca25f" # "url(#diagonalHatch);"                
+                opacity = 1
+            elif rate > .5 or rate_14 > .5:
+                pattern = "#99d8c9" # "url(#diagonalHatch);"                
+                opacity = 1
             else:
                 pattern = "none;"
             stroke = stroke + "stroke:#000000;stroke-width:0.1;" 
@@ -95,10 +97,10 @@ def make_map(fips):
 
 
             
-
+            color = "#e5f5f9"
             dup = copy.copy(p) 
             p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
-            dup['style'] = path_style + pattern
+            dup['style'] = path_style + pattern + stroke + "stroke:#000000;stroke-width:0.1;" 
             dup['id'] = int(p['id']) + 10000000
             dup_paths.append(dup)
 

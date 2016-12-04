@@ -132,6 +132,7 @@ def make_map(fips_to_dre):
 #                if mail:
 #                    pattern = "url(#mail);"
 
+            color = "#c51b8a"
 
             dup = copy.copy(p) 
             p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
@@ -143,7 +144,7 @@ def make_map(fips_to_dre):
 
 
     # Soups is bad at SVG and it should feel bad
-    with open("../dre.svg", "w") as output:
+    with open("../ivote.svg", "w") as output:
         s = str(soup.prettify())
         s = s.replace("</defs>", "")
         s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + pat + vvpattern + mail_pattern + "</defs>")
@@ -239,10 +240,9 @@ with open("../data/verified_pop.csv") as f:
 
             fips = code["fips_code"]
             # This is an accessible backup 
-            if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"]:
+            if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"] and "iVotronic" in code["model"]:
                 dre = True
                 vvpat = int(vvpats[fips])
-                equip = code["model"]
 
             elif code["pp_std"] == "TRUE" and "Optical Scan" in code["equip_type"]:
                 opscan = True
@@ -257,6 +257,12 @@ with open("../data/verified_pop.csv") as f:
             states_info[state]["dre"] += population
             states_info["Nation"]["dre"] += population
 
+        if vvpat:
+            states_info[state]["vvpat"] += population
+            states_info["Nation"]["vvpat"] += population 
+        if opscan:
+            states_info[state]["opscan"] += population
+            states_info["Nation"]["opscan"] += population 
             if equip in states_info[state]["equipment"].keys():
                 states_info[state]["equipment"][equip] += population
             else:
@@ -266,13 +272,6 @@ with open("../data/verified_pop.csv") as f:
                 states_info["Nation"]["equipment"][equip] += population
             else:
                 states_info["Nation"]["equipment"][equip] = population
-
-        if vvpat:
-            states_info[state]["vvpat"] += population
-            states_info["Nation"]["vvpat"] += population 
-        if opscan:
-            states_info[state]["opscan"] += population
-            states_info["Nation"]["opscan"] += population 
 
         fips_to_dre[fips[0:5]] = {"dre":dre, "vvpat":vvpat, "mail": mail, 
                         "swing":state_swing[state]["party"], "prob":state_swing[state]["prob"]}

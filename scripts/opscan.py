@@ -28,7 +28,7 @@ def make_map(fips_to_dre):
     paths = soup.findAll('path')
     
     pat = """<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
-        <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#FFFF00; stroke-width:2; stroke-opacity:1;">
+        <g xmlns="http://www.w3.org/2000/svg" style="fill:none; stroke:#FFFF00; stroke-width:1.5; stroke-opacity:1;">
 <path d="M-2,2 l4,-4"/>
 <path d="M0,8 l8,-8"/>
 <path d="M6,10 l4,-4"/>
@@ -72,8 +72,8 @@ def make_map(fips_to_dre):
                     opacity = (abs(50.0 - fips_to_dre["02000"]["prob"])/60)
 
                 else: 
-                    rate += int(fips_to_dre[p['id']]["dre"])
-                    rate += int(fips_to_dre[p['id']]["vvpat"])
+                    rate += int(fips_to_dre[p['id']]["opscan"])
+                    rate += int(fips_to_dre[p['id']]["central"])
 
                     swing =  fips_to_dre[p['id']]["swing"]
                     opacity = (abs(50.0- fips_to_dre[p['id']]["prob"])/60)
@@ -91,6 +91,7 @@ def make_map(fips_to_dre):
             if opacity < .2:
                 opacity = .3
             
+            opacity = .8
             if rate == 1:
                 
                 #stroke = stroke + "stroke:#FFFF00;stroke-width:1;" 
@@ -101,7 +102,8 @@ def make_map(fips_to_dre):
                 elif swing == "D":
                     color = dem_colors[0] 
 
-                pattern = "url(#diagonalHatch);"
+                pattern = "#e7298a" # "#FF0000" # "url(#diagonalHatch);"
+                opacity = 1
 #                if mail:
 #                    pattern = "url(#mail);"
             elif rate == 2:
@@ -113,7 +115,8 @@ def make_map(fips_to_dre):
                 elif swing == "D":
                     color = dem_colors[0] 
 
-                pattern = "url(#orangeDiagonalHatch);"
+                pattern = "#91003f" # "#FF0000"
+                opacity = 1
 
 #                if mail:
 #                    pattern = "url(#mail);"
@@ -133,9 +136,11 @@ def make_map(fips_to_dre):
 #                    pattern = "url(#mail);"
 
 
+            color = "#e7e1ef"
             dup = copy.copy(p) 
             p['style'] = path_style + color + ";opacity:" + str(opacity) + stroke
-            dup['style'] = path_style + pattern
+            dup['style'] = path_style + pattern + stroke + "stroke:#000000;stroke-width:0.1;" 
+
             dup['id'] = int(p['id']) + 10000000
             dup_paths.append(dup)
 
@@ -143,7 +148,7 @@ def make_map(fips_to_dre):
 
 
     # Soups is bad at SVG and it should feel bad
-    with open("../dre.svg", "w") as output:
+    with open("../opscan.svg", "w") as output:
         s = str(soup.prettify())
         s = s.replace("</defs>", "")
         s = s.replace("<defs id=\"defs9561\">", "<defs id=\"defs9561\">" + pat + vvpattern + mail_pattern + "</defs>")
@@ -177,7 +182,7 @@ with open("../data/verified_pop.csv") as f:
 
         i += 1
     precincts = {}
-    states_info = { "Nation":{"population":0, "dre":0, "opscan":0, "vvpat":0, "equipment":{}}}
+    states_info = { "Nation":{"population":0, "dre":0, "opscan":0, "central":0, "vvpat":0, "equipment":{}}}
     fips_to_dre = {}
 
     # reorganize stuff into a {state:{county:[codes]}}
@@ -188,7 +193,7 @@ with open("../data/verified_pop.csv") as f:
             precincts[code["fips_code"]].append(code)
         else:
             precincts[code["fips_code"]] = [code]
-            states_info[code["state"]] = {"population":0, "dre":0, "opscan":0, "vvpat":0, "equipment":{}}
+            states_info[code["state"]] = {"population":0, "dre":0, "opscan":0, "central":0, "vvpat":0, "equipment":{}}
 
 
 
@@ -225,6 +230,8 @@ with open("../data/verified_pop.csv") as f:
         dre = False 
         mail = False
         opscan = False
+
+        central = False
         equip = ""
 
         population = int(name[0]["population"])
@@ -242,11 +249,13 @@ with open("../data/verified_pop.csv") as f:
             if code["pp_std"] == "TRUE" and "DRE" in code["equip_type"]:
                 dre = True
                 vvpat = int(vvpats[fips])
-                equip = code["model"]
 
             elif code["pp_std"] == "TRUE" and "Optical Scan" in code["equip_type"]:
                 opscan = True
                 equip = code["model"]
+                if code["pp_std_cc"] == "TRUE":
+                    central = True
+
             if code["all_vbm"] == "TRUE":
                 mail = True
 
@@ -256,6 +265,17 @@ with open("../data/verified_pop.csv") as f:
         if dre:
             states_info[state]["dre"] += population
             states_info["Nation"]["dre"] += population
+
+        if vvpat:
+            states_info[state]["vvpat"] += population
+            states_info["Nation"]["vvpat"] += population 
+        if opscan:
+            states_info[state]["opscan"] += population
+            states_info["Nation"]["opscan"] += population 
+
+            if central:
+                states_info[state]["central"] += population
+                states_info["Nation"]["central"] += population 
 
             if equip in states_info[state]["equipment"].keys():
                 states_info[state]["equipment"][equip] += population
@@ -267,14 +287,7 @@ with open("../data/verified_pop.csv") as f:
             else:
                 states_info["Nation"]["equipment"][equip] = population
 
-        if vvpat:
-            states_info[state]["vvpat"] += population
-            states_info["Nation"]["vvpat"] += population 
-        if opscan:
-            states_info[state]["opscan"] += population
-            states_info["Nation"]["opscan"] += population 
-
-        fips_to_dre[fips[0:5]] = {"dre":dre, "vvpat":vvpat, "mail": mail, 
+        fips_to_dre[fips[0:5]] = {"dre":dre, "vvpat":vvpat, "opscan":opscan, "central":central, "mail": mail, 
                         "swing":state_swing[state]["party"], "prob":state_swing[state]["prob"]}
         
         states_info[state]["population"] += population
@@ -299,7 +312,8 @@ with open("../data/verified_pop.csv") as f:
         national += count
         paper = dre - info["vvpat"]
         opscan = info["opscan"]
-        print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}% \t %OpScan: {:>6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count, 100*(1.0*opscan)/count))
+        central = info["central"]
+        print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}% \t %OpScan: {:>6.2f}% \t %Central: {:>6.2f}%".format(state, locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*paper)/count, 100*(1.0*opscan)/count, 100*(1.0*central)/count))
         
         for key in info["equipment"].keys():
             print("\t {:25s} \t %Equip: {:>6.2f}%".format(key, 100*(1.0*info["equipment"][key])/count))
@@ -312,7 +326,9 @@ with open("../data/verified_pop.csv") as f:
     dre = states_info["Nation"]["dre"]
     nat_paper = dre - states_info["Nation"]["vvpat"]
     opscan = states_info["Nation"]["opscan"]
-    print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}% \t %OpScan: {:>6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*nat_paper)/count, 100*(1.0*opscan)/count))
+    central = states_info["Nation"]["central"]
+
+    print("{:25s}{:>11} \t %DRE: {: >6.2f}% \t %NoPaper: {:>6.2f}% \t %OpScan: {:>6.2f}% \t %Central: {:>6.2f}%".format("Nation", locale.format("%d", count, grouping=True), 100*(1.0*dre)/count, 100*(1.0*nat_paper)/count, 100*(1.0*opscan)/count, 100*(1.0*central)/count))
 
     for key in states_info["Nation"]["equipment"].keys():
         print("\t {:25s} \t %Equip: {:>6.2f}%".format(key, 100*(1.0*states_info["Nation"]["equipment"][key])/count))
