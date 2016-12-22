@@ -101,6 +101,28 @@ with open("../data/wards.csv") as wi:
                     "SCATTERING"    : 0
                 }
 
+    recount = {
+                    "total"         : 0, 
+                    "Trump"         : 0, 
+                    "Clinton"       : 0, 
+                    "Castle"        : 0, 
+                    "Johnson"       : 0, 
+                    "Stein"         : 0, 
+                    "Moorehead"     : 0, 
+                    "De La Fuente"  : 0, 
+                    "Fox"           : 0,
+                    "McMullin"      : 0, 
+                    "Maturen"       : 0, 
+                    "Schoenke"      : 0, 
+                    "Keniston"      : 0, 
+                    "Kotlikoff"     : 0, 
+                    "Hoefling"      : 0, 
+                    "Maldonado"     : 0, 
+                    "Soltysik"      : 0, 
+                    "SCATTERING"    : 0
+                }
+
+
     with open("../data/wi_recount_equip.csv") as re_eq:
         for line in re_eq:
             co = line.split(',')[0]
@@ -112,25 +134,53 @@ with open("../data/wards.csv") as wi:
         re = wards[county]["recount_method"]
 
         if re not in res_eq.keys():
-            res_eq[re] = 0
+            res_eq[re] = {"total":0, "Clinton":0, "Trump":0} 
+            
 
         for ward in wards[county]["data"].keys():
-            e = equip[ward.split(" WARD")[0].rstrip()]
+            e = equip[ward.split(" WARD")[0].rstrip()].rstrip()
             for key in wards[county]["data"][ward]["original"].keys():
                 total[key] += wards[county]["data"][ward]["original"][key]
+                recount[key] += wards[county]["data"][ward]["recount"][key]
 
             if e in res.keys():
-                res[e] += wards[county]["data"][ward]["original"]["total"]
+                res[e]["total"] += wards[county]["data"][ward]["original"]["total"]
+                res[e]["Trump"] += wards[county]["data"][ward]["original"]["Trump"]
+                res[e]["Clinton"] += wards[county]["data"][ward]["original"]["Clinton"]
             else:
-                res[e] = wards[county]["data"][ward]["original"]["total"]
+                res[e] = {}
+                res[e]["total"] = wards[county]["data"][ward]["original"]["total"]
+                res[e]["Trump"] = wards[county]["data"][ward]["original"]["Trump"]
+                res[e]["Clinton"] = wards[county]["data"][ward]["original"]["Clinton"]
 
-            res_eq[re] += wards[county]["data"][ward]["recount"]["total"]
+            res_eq[re]["total"] += wards[county]["data"][ward]["recount"]["total"]
+            res_eq[re]["Trump"] += wards[county]["data"][ward]["recount"]["Trump"]
+            res_eq[re]["Clinton"] += wards[county]["data"][ward]["recount"]["Clinton"]
 
-    print "========== RECOUNT =========="
+    print("{:85s} {:>10} {:>6}% | {:>10} {:>6}% | {:>10} {:>6}%".format("========== RECOUNT ==========", "TOTAL", "", "Trump", "", "Clinton", ""))
+
     for item in res_eq.keys():
-        print("{:85s} \t {:>11} \t {:>6.2f}%".format(item, locale.format("%d", res_eq[item], grouping=True), 100*(res_eq[item]*1.0)/total["total"]))
+        print("{:85s} {:>10} {:>6.2f}% | {:>10} {:>6.2f}% | {:>10} {:>6.2f}%".format(item, 
+            locale.format("%d", res_eq[item]["total"], grouping=True), 100*(res_eq[item]["total"]*1.0)/recount["total"], 
+            locale.format("%d", res_eq[item]["Trump"], grouping=True), 100*(res_eq[item]["Trump"]*1.0)/recount["Trump"], 
+            locale.format("%d", res_eq[item]["Clinton"], grouping=True), 100*(res_eq[item]["Clinton"]*1.0)/recount["Clinton"])) 
 
-    print "========== ORIGINAL =========="
+
+    print("{:85s} {:>10} {:>6.2f}% | {:>10} {:>6.2f}% | {:>10} {:>6.2f}%".format("total", 
+        locale.format("%d", recount["total"], grouping=True), 100*(recount["total"]*1.0)/recount["total"], 
+        locale.format("%d", recount["Trump"], grouping=True), 100*(recount["Trump"]*1.0)/recount["Trump"], 
+        locale.format("%d", recount["Clinton"], grouping=True), 100*(recount["Clinton"]*1.0)/recount["Clinton"])) 
+
+
+    print "\n"
+    print("{:85s} {:>10} {:>6}% | {:>10} {:>6}% | {:>10} {:>6}%".format("========== ORIGINAL ==========", "TOTAL", "", "Trump", "", "Clinton", ""))
     for item in res.keys():
-        print("{:85s} \t {:>11} \t {:>6.2f}%".format(item, locale.format("%d", res[item], grouping=True), 100*(res[item]*1.0)/total["total"]))
-    print("{:85s} \t {:>11} \t {:>6.2f}%".format("total", locale.format("%d", total["total"], grouping=True), 100*(total["total"]*1.0)/total["total"]))
+        print("{:85s} {:>10} {:>6.2f}% | {:>10} {:>6.2f}% | {:>10} {:>6.2f}%".format(item, 
+            locale.format("%d", res[item]["total"], grouping=True), 100*(res[item]["total"]*1.0)/total["total"], 
+            locale.format("%d", res[item]["Trump"], grouping=True), 100*(res[item]["Trump"]*1.0)/total["Trump"], 
+            locale.format("%d", res[item]["Clinton"], grouping=True), 100*(res[item]["Clinton"]*1.0)/total["Clinton"])) 
+
+    print("{:85s} {:>10} {:>6.2f}% | {:>10} {:>6.2f}% | {:>10} {:>6.2f}%".format("total", 
+        locale.format("%d", total["total"], grouping=True), 100*(total["total"]*1.0)/total["total"], 
+        locale.format("%d", total["Trump"], grouping=True), 100*(total["Trump"]*1.0)/total["Trump"], 
+        locale.format("%d", total["Clinton"], grouping=True), 100*(total["Clinton"]*1.0)/total["Clinton"])) 
