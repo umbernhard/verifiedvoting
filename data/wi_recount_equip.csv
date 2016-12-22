@@ -2,11 +2,11 @@ ADAMS,Hand Count
 ASHLAND,Hand Count
 BARRON,Hand Count
 BAYFIELD,Hand Count
-BROWN,Optical Scan and Hand Count
-BUFFALO,Optical Scan (for one muni) and Hand Count
+BROWN,Mixed
+BUFFALO,Mixed
 BURNETT,Hand Count
 CALUMET,Hand Count
-CHIPPEWA,Optical Scan and Hand Count
+CHIPPEWA,Mixed
 CLARK,Hand Count
 COLUMBIA,Hand Count
 CRAWFORD,Hand Count
@@ -14,12 +14,12 @@ DANE,Hand Count
 DODGE,Hand Count
 DOOR,Hand Count
 DOUGLAS,Hand Count
-DUNN,Optical Scan and Hand Count
+DUNN,Mixed
 EAU CLAIRE,Hand Count
 FLORENCE,Hand Count
 FOND DU LAC,Hand Count
 FOREST,Optical Scan
-GRANT,Optical Scan and Hand Count
+GRANT,Mixed
 GREEN,Hand Count
 GREEN LAKE,Hand Count
 IOWA,Hand Count
@@ -30,7 +30,7 @@ JUNEAU,Hand Count
 KENOSHA,Hand Count
 KEWAUNEE,Optical Scan
 LA CROSSE,Hand Count
-LAFAYETTE,Hand Count (Optical Scan for one muni)
+LAFAYETTE,Mixed
 LANGLADE,Hand Count
 LINCOLN,Hand Count
 MANITOWOC,Hand Count
@@ -41,8 +41,8 @@ MENOMINEE,Hand Count
 MILWAUKEE,Optical Scan
 MONROE,Hand Count
 OCONTO,Hand Count
-ONEIDA,Hand Count and Optical Scan
-OUTAGAMIE,Hand Count and Optical Scan
+ONEIDA,Mixed
+OUTAGAMIE,Mixed
 OZAUKEE,Hand Count
 PEPIN,Optical Scan
 PIERCE,Hand Count
@@ -52,17 +52,17 @@ PRICE,Hand Count
 RACINE,Optical Scan
 RICHLAND,Hand Count
 ROCK,Optical Scan
-RUSK,Optical Scan and Hand Count
+RUSK,Mixed
 SAUK,Hand Count
 SAWYER,Hand Count
-SHAWANO,Hand Count and Optical Scan
+SHAWANO,Mixed
 SHEBOYGAN,Optical Scan
-ST. CROIX,Hand Count and Optical Scan
+ST. CROIX,Mixed
 TAYLOR,Hand Count
 TREMPEALEAU,Hand Count
 VERNON,Hand Count
 VILAS,Optical Scan
-WALWORTH,Hand Count and Optical Scan
+WALWORTH,Mixed
 WASHBURN,Hand Count
 WASHINGTON,Hand Count
 WAUKESHA,Optical Scan
