@@ -17,10 +17,11 @@ with open("../data/wards.csv") as wi:
         splitter.whitespace_split = True
         data = list(splitter)
 
-        if data[0] not in wards.keys():
-            wards[data[0]] = {}
+        county = data[0].rstrip()
+        if county not in wards.keys():
+            wards[county] = {"recount_method":"", "data":{}}
 
-        wards[data[0]][data[2].replace('"', '').upper()] = {
+        wards[county]["data"][data[2].replace('"', '').upper()] = {
                 "municipality":data[1], 
                 "original":{
                     "total"         :  int(data[3].replace('"', '')), 
@@ -77,6 +78,7 @@ with open("../data/wards.csv") as wi:
 
 
     res = {}
+    res_eq = {}
 
     total = {
                     "total"         : 0, 
@@ -98,21 +100,37 @@ with open("../data/wards.csv") as wi:
                     "Soltysik"      : 0, 
                     "SCATTERING"    : 0
                 }
-    for county in wards.keys():
-        for ward in wards[county].keys():
-            e = equip[ward.split(" WARD")[0].rstrip()]
 
-            for key in wards[county][ward]["original"].keys():
-                total[key] += wards[county][ward]["original"][key]
+    with open("../data/wi_recount_equip.csv") as re_eq:
+        for line in re_eq:
+            co = line.split(',')[0]
+            eq = line.split(',')[1]
+
+            wards[co]["recount_method"] = eq.rstrip()
+
+    for county in wards.keys():
+        re = wards[county]["recount_method"]
+
+        if re not in res_eq.keys():
+            res_eq[re] = 0
+
+        for ward in wards[county]["data"].keys():
+            e = equip[ward.split(" WARD")[0].rstrip()]
+            for key in wards[county]["data"][ward]["original"].keys():
+                total[key] += wards[county]["data"][ward]["original"][key]
 
             if e in res.keys():
-                res[e] += wards[county][ward]["original"]["total"]
+                res[e] += wards[county]["data"][ward]["original"]["total"]
             else:
-                res[e] = wards[county][ward]["original"]["total"]
+                res[e] = wards[county]["data"][ward]["original"]["total"]
 
-        
+            res_eq[re] += wards[county]["data"][ward]["recount"]["total"]
 
+    print "========== RECOUNT =========="
+    for item in res_eq.keys():
+        print("{:85s} \t {:>11} \t {:>6.2f}%".format(item, locale.format("%d", res_eq[item], grouping=True), 100*(res_eq[item]*1.0)/total["total"]))
 
+    print "========== ORIGINAL =========="
     for item in res.keys():
         print("{:85s} \t {:>11} \t {:>6.2f}%".format(item, locale.format("%d", res[item], grouping=True), 100*(res[item]*1.0)/total["total"]))
     print("{:85s} \t {:>11} \t {:>6.2f}%".format("total", locale.format("%d", total["total"], grouping=True), 100*(total["total"]*1.0)/total["total"]))
